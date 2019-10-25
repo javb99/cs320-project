@@ -94,17 +94,30 @@
 
 \section{Purpose}
 
-The purpose of this System Requirements Specification documentation is to provide a complete and thorough definition of the Group Calendar web application. This includes the purpose of the application and its usage and features. It will also detail the constraints and limits of the application, and who this application's intended audience is.
+The purpose of this System Requirements Specification documentation is to
+provide a complete and thorough definition of the Group Calendar web application.
+This includes the purpose of the application and its usage and features. It will
+also detail the constraints and limits of the application, and who this
+application's intended audience is.
 
 
 \section{Project Scope}
 
-The software is a web application that allows users to merge and share calendars. It aims to help people with lots of calendars easily give others access to an aggregated view. The software will also allow groups of users to plan a meeting at a time that is available in their calendars. The software won’t determine the best meeting time, it will simply overlay calendars and/or show shared availability.
+The software is a web application that allows users to merge and share calendars.
+It aims to help people with lots of calendars easily give others access to an
+aggregated view. The software will also allow groups of users to plan a meeting
+at a time that is available in their calendars. The software won’t determine the
+best meeting time, it will simply overlay calendars and/or show shared availability.
 
 
 \section{Intended Audience and Reading Suggestions}
 
-This document in intended for our professor, developers on the project, and future customers interested in the product (Not end users). Developers should read sequentially with a focus on the requirements in chapters three and four. The professor should focus on chapter two and the use case diagrams. Interested customers should also focus on chapter two and dig in to the later chapters for more detail on the specific requirements that this product meets.
+This document in intended for our professor, developers on the project, and
+future customers interested in the product (Not end users). Developers should
+read sequentially with a focus on the requirements in chapters three and four.
+The professor should focus on chapter two and the use case diagrams. Interested
+customers should also focus on chapter two and dig in to the later chapters for
+more detail on the specific requirements that this product meets.
 
 
 \section{Definitions Acronyms and Abbreviations}
@@ -134,7 +147,10 @@ including title, author, version number, date, and source or location.$>$
 \chapter{Overall Description}
 
 \section{Product Perspective}
-The Group Calendar web application is a stand-alone web app. It consists of a web interface allowing users to see commonly unscheduled time blocks between users in groups, and a database which stores the information. The database is broken into 2 categories:
+The Group Calendar web application is a stand-alone web app. It consists of a
+web interface allowing users to see commonly unscheduled time blocks between
+users in groups, and a database which stores the information. The database is
+broken into 2 categories:
 \\1. users
 \\  (individual calendars, preferences, groups)
 \\2. groups
@@ -149,17 +165,23 @@ related requirements and how they relate, such as a top level data flow diagram
 or object class diagram, is often effective.$>$
 
 \section{Users and Characteristics}
-Registered User – This user has signed up for an account. They have access to all the basic functionality of creating and managing calendar groupings.\\
+Registered User – This user has signed up for an account. They have access to
+all the basic functionality of creating and managing calendar groupings.\\
 Group Member – Is registered. Accepted an invite to a group.\\
 Group Leader – Is registered. Created a group. Can manage group members.\\
-Guest User – Not a registered user. Was given an iCal link but doesn’t have edit access. Only access to the iCal feed link.\\
-Admin – Must have special permission and/or access to the database. Performs maintenance on the database.\\
+Guest User – Not a registered user. Was given an iCal link but doesn’t have edit
+access. Only access to the iCal feed link.\\
+Admin – Must have special permission and/or access to the database. Performs
+maintenance on the database.\\
 \\
 Registered Users are more important than guest users and admins.
 
 
 \section{Operating Environment}
-The operating environment for this application is an in-browser application. The application is intended to run on a desktop web browser, so mobile usability is not a priority. Due to the in-browser usage of the application, operating system and platform should not affect usability.
+The operating environment for this application is an in-browser application. The
+application is intended to run on a desktop web browser, so mobile usability is
+not a priority. Due to the in-browser usage of the application, operating system
+and platform should not affect usability.
 
 \section{Design and Implementation Constraints}
 $<$Describe any items or issues that will limit the options available to the
@@ -172,7 +194,12 @@ customer’s organization will be responsible for maintaining the delivered
 software).$>$
 
 \section{User Documentation}
-For the purpose of this application, a complete user manual is unnecessary. Given the limited number of actions available to each user and simplicity of the interface,the application should be able to be used by the user immediately, provided the user is familiar with the scope of the application. For this reason, a landing page with a brief description of the application, and an FAQ page will be the extent of the user manual.
+For the purpose of this application, a complete user manual is unnecessary.
+Given the limited number of actions available to each user and simplicity of the
+interface,the application should be able to be used by the user immediately,
+provided the user is familiar with the scope of the application. For this
+reason, a landing page with a brief description of the application, and an FAQ
+page will be the extent of the user manual.
 
 \section{Assumptions and Dependencies}
 $<$List any assumed factors (as opposed to known facts) that could affect the
@@ -188,7 +215,15 @@ example, in the vision and scope document or the project plan).$>$
 \chapter{Specific Requirements}
 
 \section{External Interface Requirements}
-For the primary user interface, the user will be presented with a calendar view. The calendar can be presented in either a monthly or weekly view. Along the left edge of the calendar will be clickable tabs representing the different groups the user is a member of, which by clicking, the user can change which group focus they are interested in viewing. Along the right side will be similar tabs reperesenting the various users and sub-groups that are members of the same group that is selected. These tabs can be selected to filter out selected users from consideration. At the top right, the user can find links to manage their settings and profile.
+For the primary user interface, the user will be presented with a calendar view.
+The calendar can be presented in either a monthly or weekly view. Along the left
+edge of the calendar will be clickable tabs representing the different groups
+the user is a member of, which by clicking, the user can change which group
+focus they are interested in viewing. Along the right side will be similar tabs
+reperesenting the various users and sub-groups that are members of the same
+group that is selected. These tabs can be selected to filter out selected users
+from consideration. At the top right, the user can find links to manage their
+settings and profile.
 \section{Functional Requirements}
 
 \section{Behavior Requirements}
