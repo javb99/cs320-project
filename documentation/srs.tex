@@ -244,19 +244,24 @@ settings and profile.
 \chapter{Nonfunctional Requirements}
 
 \section{Performance Requirements}
-$<$If there are performance requirements for the product under various
-circumstances, state them here and explain their rationale, to help the
-developers understand the intent and make suitable design choices. Specify the
-timing relationships for real time systems. Make such requirements as specific
-as possible. You may need to state performance requirements for individual
-functional requirements or features.$>$
+\begin{enumerate}
+\item Any action should not take more than 10 seconds to perform, assuming user
+has a healthy internet connection.
+\item The system should clearly identify when it is loading or processing
+information with a loading indicator.
+\item The system shall run without issue on Washington State University Vancouver
+lab computers.
+\end{enumerate}
 
 \section{Safety and Security Requirements}
-This application, by design, is safe and secure to use. By importing .ical
-copies of the user's personal calendars, the application cannot change or affect
-the user's master calendar in any way. Additionally, the actual appointment
-titles and information is never accessed, only the date and times, so any
-sensitive or personal information is not visible to others using the application.
+\begin{enumerate}
+\item The system shall not access a user's calendar event names or descriptions, 
+only the dates and times of individual events.
+\item The system shall not make any changes to a user's original calendar import,
+only copy relevant information from the file into a simplified form.
+\item The system shall not store a user's calendar file in any way, and shall
+keep it only until the simplified file is created.
+\end{enumerate}
 
 \section{Software Quality Attributes}
 $<$Specify any additional quality characteristics for the product that will be
