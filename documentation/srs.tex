@@ -63,9 +63,9 @@
                 \hline
         	    Name & SID & Email\\
                 \hline
-        	    Joseph Van Boxtel & SID & joseph.vanboxtel@wsu.edu\\
+        	    Joseph Van Boxtel & 11690601 & joseph.vanboxtel@wsu.edu\\
                 \hline
-        	    Jakob Miner & SID & jakob.miner@wsu.edu\\
+        	    Jakob Miner & 11659517 & jakob.miner@wsu.edu\\
                 \hline
             \end{tabular}
         \end{center}
@@ -94,20 +94,19 @@
 
 \section{Purpose}
 
-The purpose of this System Requirements Specification documentation is to
+The purpose of this System Requirements Specification document is to
 provide a complete and thorough definition of the Group Calendar web application.
-This includes the purpose of the application and its usage and features. It will
-also detail the constraints and limits of the application, and who this
-application's intended audience is.
+This includes the purpose of the application, its usage, and general features. It will
+also detail the constraints, limitations, and intended audience of the application.
 
 
 \section{Project Scope}
 
 This software is a web application that allows groups of users to quickly and easily 
-view a calendar displaying unscheduled time blocks they all have in common. Its 
-primary use will be for teams, organizations, groups, etc. to plan meetings and
-events around multiple busy schedules and minimizing reschedules and rainchecks.
-\\By highlighting only unscheduled time, it will make it possible to quickly find
+view a calendar displaying shared availability. Its primary use will be for groups of 
+users to plan meetings and events around multiple busy schedules, minimizing 
+reschedules and rainchecks.
+\\By highlighting only available time, it will be easy to find
 appropriate time blocks, even with large groups of busy individuals.
 
 
@@ -132,6 +131,7 @@ a group calendar.
 \item Group Member - A user who is a member of a group, but not that group owner.
 \item Group Owner - The User who created a given group.
 \item Admin - A person related to development and maintenance of the web application.
+\item WSUV - Washington State University, Vancouver campus.
 \end{itemize}
 
 \section{Document Conventions}
@@ -157,10 +157,19 @@ The Group Calendar web application is a stand-alone web app. It consists of a
 web interface allowing users to see commonly unscheduled time blocks between
 users in groups, and a database which stores the information. The database is
 broken into 2 categories:
-\\1. users
-\\  (individual calendars, preferences, groups)
-\\2. groups
-\\  (members, consolidated calendar, group events)
+\begin{itemize}
+\item Users
+	\begin{itemize}
+	\item Individual Calendars
+	\item User Information
+	\item Groups
+	\end{itemize}
+\item Groups
+	\begin{itemize}
+	\item Members
+	\item Group Calendar
+	\end{itemize}
+\end{itemize}
 
 \section{Product Functionality}
 \begin{itemize}
@@ -175,7 +184,7 @@ common calendar, showing time blocks where none of the selected users have
 events scheduled.
 \item Filter users from consideration - Users may narrow the selection of users
 being considered when creating and displaying the group availability calendar.
-\item Select time scale - User can change the calendar view to differing time
+\item Select time scale - User can change the calendar view to differing time 
 scales, for example monthly or weekly view.
 \item Select group view - Users that are members of multiple groups can select
 which group calendar they wish to see.
@@ -183,15 +192,13 @@ which group calendar they wish to see.
 
 \section{Users and Characteristics}
 \begin{itemize}
-    \item Registered User – This user has signed up for an account. They have access to
+	\item Non-User – A potential future user who has not yet crated an account.
+    \item User – This user has signed up for an account. They have access to
 all the basic functionality of creating and managing calendar groupings.
     \item Group Member – Is registered. Accepted an invite to a group.
-    \item Group Leader – Is registered. Created a group. Can manage group members.
-    \item Guest User – Not a registered user. Was given an iCal link but doesn’t have edit
-access. Only access to the iCal feed link.
+    \item Group Owner – Is registered. Created a group. Can manage group members.
     \item Admin – Must have special permission and/or access to the database. Performs
 maintenance on the database.
-	\item WSUV - Washington State University, Vancouver campus.
 \end{itemize}
 Registered Users are more important than guest users and admins.
 
@@ -220,14 +227,12 @@ reason, a landing page with a brief description of the application, and an FAQ
 page will be the extent of the user manual.
 
 \section{Assumptions and Dependencies}
-$<$List any assumed factors (as opposed to known facts) that could affect the
-requirements stated in the SRS. These could include third-party or commercial
-components that you plan to use, issues around the development or operating
-environment, or constraints. The project could be affected if these assumptions
-are incorrect, are not shared, or change. Also identify any dependencies the
-project has on external factors, such as software components that you intend to
-reuse from another project, unless they are already documented elsewhere (for
-example, in the vision and scope document or the project plan).$>$
+\begin{enumerate}
+\item The system will rely on the .ical standardized calindar file format to
+be imported from a pre-existing calendar.
+\item It is assumed a given Group will not exceed 50 members.
+\item It is assumed a given User will not be a member of more than 50 groups.
+\end{enumerate}
 
 
 \chapter{Specific Requirements}
@@ -242,56 +247,7 @@ representing the various users and sub-groups that are members of the same
 group that is selected. These tabs can be selected to filter out selected users
 from consideration. At the top right, the user can find links to manage their
 settings and profile.
-
-
 \section{Functional Requirements}
-
-\subsection{User Management System}
-    \begin{enumerate}
-    \item The system shall allow non-users to create accounts using a username and password.
-    \item The system shall allow users to log in with their username and password
-    \item The system should allow users to change their password
-    \item The system should allow users to change their username
-    \item The system should allow users to delete their account
-    \end{enumerate}
-
-\subsection{Calendar Import System}
-    \begin{enumerate}
-    \item The system shall support importing calendars from Apple’s implementation of the iCalendar format.
-    \item The system shall support importing calendars from Google’s implementation of the iCalendar format.
-    \item The system should support importing calendars from arbitrary implementations of the iCalendar format.
-    \item The system shall list the name and URL of the user’s previously imported calendars
-    \item The system shall allow the user to remove a calendar from their profile
-    \item The system should allow the user to manually refresh their calendars.
-    \item The system will allow refreshing of calendars automatically as changes become available
-    \end{enumerate}
-
-\subsection{The Groups System}
-    \begin{enumerate}
-    \item The system shall allow users to create groups with a name and password.
-    \item The system shall allow group owners to issue invitations by a link.
-    \item Non-users who click an invite link will be directed to the registration page.
-    \item After registering for an account through an invitation link, the system shall add the user to the group.
-    \item The system shall allow users to join groups by clicking an invitation link.
-    \item The system shall allow group owners to remove members from the group.
-    \item The system should allow group owners to change the group name and password.
-    \item The system shall allow group owners to delete a group.
-    \item The system will allow group owners to leave a group.
-    \item The system shall not allow group members to remove other members.
-    \item The system shall allow group members to leave a group.
-    \end{enumerate}
-
-\subsection{The Calendar System}
-    \begin{enumerate}
-    \item The system shall allow the user to view time blocks that are available on a week-style view.
-    \item When in week mode, the system shall allow the user to change the selected week forward or backward.
-    \item The system shall allow the user to view time blocks that are available on a month-style view.
-    \item When in month mode, the system shall allow the user to change the selected week forward or backward.
-    \item The system shall allow the user to view time blocks that are available by selecting specific users.
-    \item The system will allow the user to view an aggregate set of time blocks from a selection users and calendars.
-    \item The system should treat events that are not marked `busy` as nonexistent and should consider them available.
-    \end{enumerate}
-
 
 \section{Behavior Requirements}
 
@@ -310,7 +266,7 @@ lab computers.
 
 \section{Safety and Security Requirements}
 \begin{enumerate}
-\item The system shall not access a user's calendar event names or descriptions,
+\item The system shall not access a user's calendar event names or descriptions, 
 only the dates and times of individual events.
 \item The system shall not make any changes to a user's original calendar import,
 only copy relevant information from the file into a simplified form.
