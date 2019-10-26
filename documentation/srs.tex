@@ -104,10 +104,10 @@ also detail the constraints, limitations, and intended audience of the applicati
 
 \section{Project Scope}
 
-This software is a web application that allows groups of Users to quickly and easily 
-view a calendar displaying shared availability. Its primary use will be for groups of 
-Users to plan meetings and events around multiple busy schedules, minimizing 
-reschedules and rainchecks.
+This software is a web application that allows groups of Users to quickly and easily
+view a calendar displaying shared availability. Its primary use will be for groups of
+Users to plan meetings and events around multiple busy schedules, minimizing
+reschedules and rain-checks.
 \\By highlighting only available time, it will be easy to find
 appropriate time blocks, even with large groups of busy individuals.
 
@@ -125,7 +125,7 @@ more detail on the specific requirements that this product meets.
 \section{Definitions Acronyms and Abbreviations}
 \begin{itemize}
 \item .ical - A standardized calendar file format used by the system.
-\item User - A person accessing the calendar with the intent to use its 
+\item User - A person accessing the calendar with the intent to use its
 features.
 \item Group - A collection of Users, grouped together for the purpose of viewing
 a Group Calendar.
@@ -138,12 +138,12 @@ a Group Calendar.
 
 \section{Document Conventions}
 In this document, requirements with "shall" are assumed to be of higher priority than
-requirements that are written as "should". Additionally, the User types outlined in 
+requirements that are written as "should". Additionally, the User types outlined in
 the "Users and Characteristics" section of this document will appear capitalized.
 
 
 \section{References}
-“iCalendar.org - iCalendar Resources, Specifications and Tools,” iCalendar.org - iCalendar Resources,\\ Specifications and Tools. [Online]. Available: https://icalendar.org/. [Accessed: 26-Oct-2019].
+“iCalendar.org - iCalendar Resources, Specifications and Tools,” iCalendar.org - iCalendar Resources, Specifications and Tools. [Online]. Available: https://icalendar.org/. [Accessed: 26-Oct-2019].
 
 
 \chapter{Overall Description}
@@ -180,7 +180,7 @@ common calendar, showing time blocks where none of the selected Users have
 events scheduled.
 \item Filter Users from consideration - Users may narrow the selection of Users
 being considered when creating and displaying the Group availability calendar.
-\item Select time scale - User can change the calendar view to differing time 
+\item Select time scale - User can change the calendar view to differing time
 scales, for example monthly or weekly view.
 \item Select Group view - Users that are members of multiple Groups can select
 which Group Calendar they wish to see.
@@ -207,12 +207,12 @@ and platform should not affect usability.
 \section{Design and Implementation Constraints}
 For this system, our max performance and implementation is constrained by what
 can be accomplished on the WSUV lab computers. As they are our targeted minimum,
-going beyond their capabilities is not an option. We are also limited by our User
+going beyond their capabilities is not an option. We are also limited by our user
 interface. As loading times are a priority in order to maximise usability, our
 interface cannot be taxing to load on a moderate internet connection.
 
 \section{User Documentation}
-For the purpose of this application, a complete User manual is unnecessary.
+For the purpose of this application, a complete user manual is unnecessary.
 Given the limited number of actions available to each User and simplicity of the
 interface,the application should be able to be used by the User immediately,
 provided the User is familiar with the scope of the application. For this
@@ -221,8 +221,8 @@ page will be the extent of the User manual.
 
 \section{Assumptions and Dependencies}
 \begin{enumerate}
-\item The system will rely on the .ical standardized calindar file format to
-be imported from a pre-existing calendar.
+\item The system will rely on the .ical standardized calendar file format to
+be imported from a preexisting calendar.
 \item It is assumed a given Group will not exceed 50 members.
 \item It is assumed a given User will not be a member of more than 50 Groups.
 \end{enumerate}
@@ -231,7 +231,7 @@ be imported from a pre-existing calendar.
 \chapter{Specific Requirements}
 
 \section{External Interface Requirements}
-For the primary User interface, the User will be presented with a calendar view.
+For the primary user interface, the User will be presented with a calendar view.
 The calendar can be presented in either a monthly or weekly view. Along the left
 edge of the calendar will be clickable tabs representing the different Groups
 the User is a member of, which by clicking, the User can change which Group
@@ -327,7 +327,7 @@ lab computers.
 
 \section{Safety and Security Requirements}
 \begin{enumerate}
-\item The system shall not access a User's calendar event names or descriptions, 
+\item The system shall not access a User's calendar event names or descriptions,
 only the dates and times of individual events.
 \item The system shall not make any changes to a User's original calendar import,
 only copy relevant information from the file into a simplified form.
@@ -343,7 +343,7 @@ keep it only until the simplified file is created.
 down times.
 \item The system should be able to handle many concurrent Users without experiencing
 usage interruptions.
-\item Each Group should maintain full performance with 50 or less members. 
+\item Each Group should maintain full performance with 50 or less members.
 \end{enumerate}
 
 \subsection{Portability}
@@ -352,12 +352,12 @@ usage interruptions.
 browser.
 \item The system should be usable on a desktop computer in other common browsers
 such as Safari and Firefox.
-\item The system will not support mobile accessability.
+\item The system will not support mobile accessibility.
 \end{enumerate}
 
 \subsection{Usability}
 \begin{enumerate}
-\item Most User functions should be accessable from the main page of the application,
+\item Most User functions should be accessible from the main page of the application,
 without having to navigate through several pages.
 \item The system should perform most of it's loading upon initial log-in, to allow
 switching pages quickly without experiencing loading delays.
@@ -373,5 +373,11 @@ applications.
 
 \chapter{Other Requirements}
 The system will require use of a relatively small database. This database will be responsible for storing User profiles and Groups. The calendar files imported by the system will be highly condensed, so very little storage space will be needed.
+
+\\\\The web application will conform to GDPR by allowing Users to delete their account and all their stored information from their profile screen.
+
+\appendix
+
+\chapter{Group Log}
 
 \end{document}
