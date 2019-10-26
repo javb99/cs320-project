@@ -157,12 +157,23 @@ broken into 2 categories:
 \\  (members, consolidated calendar, group events)
 
 \section{Product Functionality}
-$<$Summarize the major functions the product must perform or must let the user
-perform. Details will be provided in Section 3, so only a high level summary
-(such as a bullet list) is needed here. Organize the functions to make them
-understandable to any reader of the SRS. A picture of the major groups of
-related requirements and how they relate, such as a top level data flow diagram
-or object class diagram, is often effective.$>$
+\begin{itemize}
+\item Register / log-in functionality - Allow user to create a profile, or log
+into an existing profile, where user data will be stored.
+\item Import calendar files - Users import existing .ical files, which are
+stored in database for creation of group calendars.
+\item Manage group membership - Users can view, create, or leave groups. Group
+admins may invite users to existing groups.
+\item View group-wide common availability - Group members are presented with a
+common calendar, showing time blocks where none of the selected users have
+events scheduled.
+\item Filter users from consideration - Users may narrow the selection of users
+being considered when creating and displaying the group availability calendar.
+\item Select time scale - User can change the calendar view to differing time 
+scales, for example monthly or weekly view.
+\item Select group view - Users that are members of multiple groups can select
+which group calendar they wish to see.
+\end{itemize}
 
 \section{Users and Characteristics}
 Registered User – This user has signed up for an account. They have access to
