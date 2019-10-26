@@ -1,5 +1,5 @@
 % Based on the resources listed below.
-% Joseph Van Boxtel, Daniel Brown, Jakob Miner
+% Joseph Van Boxtel, Jakob Miner
 %
 %Copyright 2014 Jean-Philippe Eisenbarth
 %This program is free software: you can
@@ -42,6 +42,7 @@
 %\title{%
 
 %}
+\usepackage[margin=0.5in]{geometry}
 \usepackage{hyperref}
 \begin{document}
 
@@ -49,14 +50,18 @@
     \begin{bfseries}
         \rule{1\textwidth}{5pt}\vskip1cm
 
+        \begin{figure}[ht]
+            \includegraphics[width=0.5\textwidth]{wsuvlogo}
+        \end{figure}
+
         \Huge{SOFTWARE REQUIREMENTS\\ SPECIFICATION}\\
-        \vspace{1.4cm}
+        \vspace{1cm}
         for\\
-        \vspace{1.4cm}
-       CS320 Project\\
-        \vspace{1.4cm}
+        \vspace{1cm}
+       Group Calendar\\
+        \vspace{1cm}
         \LARGE{Version \myversion}\\
-        \vspace{1.4cm}
+        \vspace{1cm}
         Prepared by:\\
         Group Name: Team JJ
         \begin{center}
@@ -382,10 +387,24 @@ applications.
 \chapter{Other Requirements}
 The system will require use of a relatively small database. This database will be responsible for storing User profiles and Groups. The calendar files imported by the system will be highly condensed, so very little storage space will be needed.
 
-\\\\The web application will conform to GDPR by allowing Users to delete their account and all their stored information from their profile screen.
+The web application will conform to GDPR by allowing Users to delete their account and all their stored information from their profile screen.
 
 \appendix
 
 \chapter{Group Log}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+    \hline
+    Theme & Hours\\
+    \hline
+    Brainstorming & 1 hour\\
+    Interface outlining & 1 hour\\
+    Use Case diagram & 1 hour\\
+    Initial Document prep & 0.5 hours\\
+    Some Individual Document Sections & 3 hours\\
+    Finish Document & 6 hours\\
+    \hline
+\end{tabular}
+\end{center}
 
 \end{document}
