@@ -169,7 +169,7 @@ common calendar, showing time blocks where none of the selected users have
 events scheduled.
 \item Filter users from consideration - Users may narrow the selection of users
 being considered when creating and displaying the group availability calendar.
-\item Select time scale - User can change the calendar view to differing time 
+\item Select time scale - User can change the calendar view to differing time
 scales, for example monthly or weekly view.
 \item Select group view - Users that are members of multiple groups can select
 which group calendar they wish to see.
@@ -236,7 +236,56 @@ representing the various users and sub-groups that are members of the same
 group that is selected. These tabs can be selected to filter out selected users
 from consideration. At the top right, the user can find links to manage their
 settings and profile.
+
+
 \section{Functional Requirements}
+
+\subsection{User Management System}
+    \begin{enumerate}
+    \item The system shall allow non-users to create accounts using a username and password.
+    \item The system shall allow users to log in with their username and password
+    \item The system should allow users to change their password
+    \item The system should allow users to change their username
+    \item The system should allow users to delete their account
+    \end{enumerate}
+
+\subsection{Calendar Import System}
+    \begin{enumerate}
+    \item The system shall support importing calendars from Apple’s implementation of the iCalendar format.
+    \item The system shall support importing calendars from Google’s implementation of the iCalendar format.
+    \item The system should support importing calendars from arbitrary implementations of the iCalendar format.
+    \item The system shall list the name and URL of the user’s previously imported calendars
+    \item The system shall allow the user to remove a calendar from their profile
+    \item The system should allow the user to manually refresh their calendars.
+    \item The system will allow refreshing of calendars automatically as changes become available
+    \end{enumerate}
+
+\subsection{The Groups System}
+    \begin{enumerate}
+    \item The system shall allow users to create groups with a name and password.
+    \item The system shall allow group owners to issue invitations by a link.
+    \item Non-users who click an invite link will be directed to the registration page.
+    \item After registering for an account through an invitation link, the system shall add the user to the group.
+    \item The system shall allow users to join groups by clicking an invitation link.
+    \item The system shall allow group owners to remove members from the group.
+    \item The system should allow group owners to change the group name and password.
+    \item The system shall allow group owners to delete a group.
+    \item The system will allow group owners to leave a group.
+    \item The system shall not allow group members to remove other members.
+    \item The system shall allow group members to leave a group.
+    \end{enumerate}
+
+\subsection{The Calendar System}
+    \begin{enumerate}
+    \item The system shall allow the user to view time blocks that are available on a week-style view.
+    \item When in week mode, the system shall allow the user to change the selected week forward or backward.
+    \item The system shall allow the user to view time blocks that are available on a month-style view.
+    \item When in month mode, the system shall allow the user to change the selected week forward or backward.
+    \item The system shall allow the user to view time blocks that are available by selecting specific users.
+    \item The system will allow the user to view an aggregate set of time blocks from a selection users and calendars.
+    \item The system should treat events that are not marked `busy` as nonexistent and should consider them available.
+    \end{enumerate}
+
 
 \section{Behavior Requirements}
 
@@ -255,7 +304,7 @@ lab computers.
 
 \section{Safety and Security Requirements}
 \begin{enumerate}
-\item The system shall not access a user's calendar event names or descriptions, 
+\item The system shall not access a user's calendar event names or descriptions,
 only the dates and times of individual events.
 \item The system shall not make any changes to a user's original calendar import,
 only copy relevant information from the file into a simplified form.
