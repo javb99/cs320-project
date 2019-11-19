@@ -5,7 +5,7 @@ const Calendar = () => {
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
   return (
       <Container>
-        <Grid columns={days.length}>
+        <Grid celled columns={days.length}>
           {days.map( (day) => (
               <Grid.Column>
                 <Day name={day}/>

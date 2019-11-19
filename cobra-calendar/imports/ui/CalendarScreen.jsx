@@ -4,7 +4,7 @@ import Calendar from '/imports/ui/Calendar';
 
 const CalendarScreen = () => {
   const groupNames = ['WSU CS Juniors', 'PNDLM', 'GridRival'];
-  const [selectedIndex, selectIndex] = useState(0)
+  const [selectedGroupIndex, selectGroupIndex] = useState(0);
   return (
       <div>
       <Header>Cobra Calendar</Header>
@@ -15,8 +15,8 @@ const CalendarScreen = () => {
               return <Menu.Item
                   key={index}
                   name={name}
-                  active={index == selectedIndex}
-                  onClick={ () => selectIndex(index) }
+                  active={index == selectedGroupIndex}
+                  onClick={ () => selectGroupIndex(index) }
               />
             })}
 
