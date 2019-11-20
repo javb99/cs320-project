@@ -1,25 +1,49 @@
 import React, { useState } from 'react'
+
+import * as _ from 'underscore';
 import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
 import Calendar from '/imports/ui/Calendar';
 
 const CalendarScreen = () => {
-  const groupNames = ['WSU CS Juniors', 'PNDLM', 'GridRival'];
-  const memberNames = ['Jakob Miner', 'Joseph Van Boxtel', 'Dan Brown'];
+  const groups = [
+    {
+      name: 'WSU CS Juniors',
+      members: [
+          'Jakob Miner',
+          'Joseph Van Boxtel',
+          'Daniel Brown'
+      ]
+    }, {
+      name: 'PNDLM',
+      members: [
+        'Jeff',
+        'Joseph Van Boxtel'
+      ]
+    }
+  ];
 
   const [selectedGroupIndex, selectGroupIndex] = useState(0);
-  const [selectedMembers, setSelectedMembers] = useState([]);
+  const selectedGroup = groups[selectedGroupIndex];
+
+  const [selectedMemberIndexes, setSelectedMemberIndexes] = useState(_.range(selectedGroup.members.length));
+
+  console.log(groups, selectedGroupIndex, selectedGroup);
   return (
       <div>
       <Header>Cobra Calendar</Header>
       <Grid>
         <Grid.Column width={2}>
           <Menu fluid vertical pointing>
-            {groupNames.map( (name, index) => {
+            {_.pluck(groups, 'name').map( (name, index) => {
               return <Menu.Item
                   key={index}
                   name={name}
                   active={index == selectedGroupIndex}
-                  onClick={ () => selectGroupIndex(index) }
+                  onClick={ () => {
+                    selectGroupIndex(index)
+                    // Select all members of the new group.
+                    setSelectedMemberIndexes(_.range(groups[index].members.length));
+                  } }
               />
             })}
 
@@ -34,16 +58,15 @@ const CalendarScreen = () => {
 
         <Grid.Column width={2}>
           <Menu fluid vertical>
-            {memberNames.map( (name, index) => {
+            {groups[selectedGroupIndex].members.map( (name, index) => {
+
               return <Menu.Item
                   key={index}
                   name={name}
-                  active={selectedMembers.includes(index)}
-                  onClick={ () => { setSelectedMembers(toggleMember(selectedMembers, index)) }}
+                  active={selectedMemberIndexes.includes(index)}
+                  onClick={ () => { setSelectedMemberIndexes(toggleMember(selectedMemberIndexes, index)) }}
               />
             })}
-
-
           </Menu>
         </Grid.Column>
       </Grid>
