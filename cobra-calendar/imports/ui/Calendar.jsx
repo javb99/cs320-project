@@ -23,15 +23,15 @@ const Day = (props) => {
         <Grid columns={1}>
           <h1>{props.name}</h1>
           {times.map( (time, row) => (
-              <Grid.Column key={row}>
-                <Grid>
+              <Grid.Row key={row}>
+                <Grid columns={4}>
                   {segments.map( (label, column) => {
-                    return <Grid.Column>
+                    return <Grid.Column color={column%2===0 ? 'red' : 'blue'}>
                       {militaryTimeForIndex(row*segments.length + column)}
                     </Grid.Column>;
                   })}
                 </Grid>
-              </Grid.Column>
+              </Grid.Row>
           ))}
         </Grid>
     );
@@ -48,4 +48,8 @@ function militaryTimeForIndex(index) {
   const row = Math.floor(index / columnCount);
   const col = index % columnCount;
   return col * segmentLength + (100 * (row + minHour));
+}
+
+function indexesForTime(start, end){
+
 }
