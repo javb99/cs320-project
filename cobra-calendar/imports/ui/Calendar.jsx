@@ -6,8 +6,8 @@ const Calendar = () => {
   return (
       <Container>
         <Grid celled columns={days.length}>
-          {days.map( (day) => (
-              <Grid.Column>
+          {days.map( (day, index) => (
+              <Grid.Column key={index}>
                 <Day name={day}/>
               </Grid.Column>
           ))}
@@ -22,8 +22,8 @@ const Day = (props) => {
     return (
         <Grid columns={1}>
           <h1>{props.name}</h1>
-          {times.map( (time) => (
-              <Grid.Column>{time}</Grid.Column>
+          {times.map( (time, index) => (
+              <Grid.Column key={index}>{time}</Grid.Column>
           ))}
         </Grid>
     );

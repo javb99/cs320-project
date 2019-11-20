@@ -38,7 +38,7 @@ const CalendarScreen = () => {
               return <Menu.Item
                   key={index}
                   name={name}
-                  active={index == selectedGroupIndex}
+                  active={index === selectedGroupIndex}
                   onClick={ () => {
                     selectGroupIndex(index)
                     // Select all members of the new group.
