@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
 
 const Calendar = () => {
-  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+  const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
   return (
       <Container>
         <Grid celled columns={days.length}>
