@@ -4,7 +4,10 @@ import Calendar from '/imports/ui/Calendar';
 
 const CalendarScreen = () => {
   const groupNames = ['WSU CS Juniors', 'PNDLM', 'GridRival'];
+  const memberNames = ['Jakob Miner', 'Joseph Van Boxtel', 'Dan Brown'];
+
   const [selectedGroupIndex, selectGroupIndex] = useState(0);
+  const [selectedMembers, setSelectedMembers] = useState([]);
   return (
       <div>
       <Header>Cobra Calendar</Header>
@@ -31,21 +34,16 @@ const CalendarScreen = () => {
 
         <Grid.Column width={2}>
           <Menu fluid vertical>
-            <Menu.Item
-                name='Jakob Miner'
-                active={true}
-                onClick={this.handleItemClick}
-            />
-            <Menu.Item
-                name='Joseph Van Boxtel'
-                active={false}
-                onClick={this.handleItemClick}
-            />
-            <Menu.Item
-                name='Daniel Brown'
-                active={false}
-                onClick={this.handleItemClick}
-            />
+            {memberNames.map( (name, index) => {
+              return <Menu.Item
+                  key={index}
+                  name={name}
+                  active={selectedMembers.includes(index)}
+                  onClick={ () => { setSelectedMembers(toggleMember(selectedMembers, index)) }}
+              />
+            })}
+
+
           </Menu>
         </Grid.Column>
       </Grid>
@@ -54,3 +52,17 @@ const CalendarScreen = () => {
 }
 
 export default CalendarScreen;
+
+function isNot(testValue) {
+  return (v) => {
+    return v !== testValue;
+  };
+}
+
+function toggleMember(selection, member){
+  if(selection.includes(member)) {
+    return selection.filter(isNot(member));
+  } else {
+    return selection.concat([member]);
+  }
+}
