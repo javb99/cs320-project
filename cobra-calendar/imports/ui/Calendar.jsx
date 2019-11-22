@@ -41,7 +41,7 @@ export default Calendar;
 
 // Takes an index in the 4/13 array representing 8am to 8pm and returns the integer representing the 24 hour time.
 // For example index 0 -> 800, index 51 -> 2045
-function militaryTimeForIndex(index) {
+export function militaryTimeForIndex(index) {
   const minHour = 8;
   const columnCount = 4;
   const segmentLength = 15;//60 / columnCount;
@@ -50,6 +50,3 @@ function militaryTimeForIndex(index) {
   return col * segmentLength + (100 * (row + minHour));
 }
 
-function indexesForTime(start, end){
-
-}
