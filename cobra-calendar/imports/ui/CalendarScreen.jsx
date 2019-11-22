@@ -82,7 +82,7 @@ function isNot(testValue) {
   };
 }
 
-function toggleMember(selection, member){
+export function toggleMember(selection, member){
   if(selection.includes(member)) {
     return selection.filter(isNot(member));
   } else {
