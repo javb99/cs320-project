@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import * as _ from 'underscore';
 import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
 import Calendar from '/imports/ui/Calendar';
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 const CalendarScreen = () => {
   const groups = [
@@ -31,6 +32,7 @@ const CalendarScreen = () => {
   return (
       <div>
       <Header>Cobra Calendar</Header>
+      <AccountsUIWrapper/>
       <Grid>
         <Grid.Column width={2}>
           <Menu fluid vertical pointing>
