@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 
 import * as _ from 'underscore';
 import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
-import Calendar from '/imports/ui/Calendar';
+import Calendar from './Calendar.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 const CalendarScreen = () => {
+  const userNames = Meteor.users.find({}).map((user)=>{return user.username})
+  console.log('users', userNames, Meteor.users.find({}).fetch())
   const groups = [
     {
       name: 'WSU CS Juniors',
@@ -16,10 +18,7 @@ const CalendarScreen = () => {
       ]
     }, {
       name: 'PNDLM',
-      members: [
-        'Jeff',
-        'Joseph Van Boxtel'
-      ]
+      members: userNames
     }
   ];
 
