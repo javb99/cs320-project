@@ -5,29 +5,14 @@ import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 
 import Calendar from './Calendar.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
-const CalendarScreen = () => {
-  const userNames = Meteor.users.find({}).map((user)=>{return user.username})
-  console.log('users', userNames, Meteor.users.find({}).fetch())
-  const groups = [
-    {
-      name: 'WSU CS Juniors',
-      members: [
-          'Jakob Miner',
-          'Joseph Van Boxtel',
-          'Daniel Brown'
-      ]
-    }, {
-      name: 'PNDLM',
-      members: userNames
-    }
-  ];
+const CalendarScreen = ({groups}) => {
+  console.log('groups', groups)
 
   const [selectedGroupIndex, selectGroupIndex] = useState(0);
-  const selectedGroup = groups[selectedGroupIndex];
 
-  const [selectedMemberIndexes, setSelectedMemberIndexes] = useState(_.range(selectedGroup.members.length));
+  const [selectedMemberIndexes, setSelectedMemberIndexes] = useState(groups.length > 0 ? _.range(groups[selectedGroupIndex].memberIDs.length) : []);
 
-  console.log(groups, selectedGroupIndex, selectedGroup);
+  console.log(groups, selectedGroupIndex);
   return (
       <div>
       <Header>Cobra Calendar</Header>
@@ -43,7 +28,7 @@ const CalendarScreen = () => {
                   onClick={ () => {
                     selectGroupIndex(index)
                     // Select all members of the new group.
-                    setSelectedMemberIndexes(_.range(groups[index].members.length));
+                    setSelectedMemberIndexes(_.range(groups[index].memberIDs.length));
                   } }
               />
             })}
@@ -58,17 +43,18 @@ const CalendarScreen = () => {
         </Grid.Column>
 
         <Grid.Column width={2}>
-          <Menu fluid vertical>
-            {groups[selectedGroupIndex].members.map( (name, index) => {
-
-              return <Menu.Item
+          { groups.length > 0
+            ? <Menu fluid vertical>
+            {groups[selectedGroupIndex].memberIDs.map( (name, index) =>
+              <Menu.Item
                   key={index}
                   name={name}
                   active={selectedMemberIndexes.includes(index)}
                   onClick={ () => { setSelectedMemberIndexes(toggleMember(selectedMemberIndexes, index)) }}
               />
-            })}
+            )}
           </Menu>
+            : '' }
         </Grid.Column>
       </Grid>
       </div>
