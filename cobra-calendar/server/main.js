@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import Links from '/imports/api/links';
+import icalParser from '/imports/ui/icalParser';
 
 function insertLink(title, url) {
   Links.insert({ title, url, createdAt: new Date() });
