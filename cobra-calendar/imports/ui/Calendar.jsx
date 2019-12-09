@@ -2,22 +2,31 @@ import React from 'react'
 import { Container, Grid } from 'semantic-ui-react'
 
 const Calendar = (props) => {
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-  const weekEndDate = new Date(props.weekStart.getFullYear(), props.weekStart.getMonth(), props.weekStart.getDate()+6);
   return (
       <Container>
-        <h1>{ props.weekStart.getDate() + '-' + (weekEndDate.getDate()) + ' ' + months[props.weekStart.getMonth()] + ' ' + props.weekStart.getFullYear() }</h1>
+        <h1>{ titleForWeekStart(props.weekStart) }</h1>
         <Grid celled columns={days.length}>
           {days.map( (day, index) => (
               <Grid.Column key={index}>
-                <Day name={day} date={ new Date(props.weekStart.getFullYear(), props.weekStart.getMonth(), props.weekStart.getDate()+index) } />
+                <Day name={day} date={ dateAddingDays(props.weekStart, index) } />
               </Grid.Column>
           ))}
         </Grid>
       </Container>
   )
 };
+
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const dateAddingDays = (date, daysOffset) => {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate()+daysOffset)
+}
+
+const titleForWeekStart = (weekStart) => {
+  const weekEndDate = dateAddingDays(weekStart, 6);
+  return weekStart.getDate() + '-' + (weekEndDate.getDate()) + ' ' + months[weekStart.getMonth()] + ' ' + weekStart.getFullYear()
+}
 
 const Day = (props) => {
     const segments = ["00", "15", "30", "45"];
