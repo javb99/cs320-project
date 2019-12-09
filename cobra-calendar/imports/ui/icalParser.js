@@ -5,10 +5,10 @@ export function parseCalendar (data) {
   for (let k in data) {
     if (data.hasOwnProperty(k)) {
       const ev = data[k];
-      if (data[k].type === 'VEVENT') {
+      if (ev.type === 'VEVENT') {
         const userEvent = {
-          eventStart: ev.start,
-          eventEnd: ev.end
+          start: ev.start,
+          end: ev.end
         };
         eventList.push(userEvent);
       }
