@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid } from 'semantic-ui-react'
+import { Container, Grid, Button, Popup } from 'semantic-ui-react'
 
 const Calendar = (props) => {
   const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
@@ -29,6 +29,12 @@ const titleForWeekStart = (weekStart) => {
 }
 
 const Day = (props) => {
+    const events = {
+      800: { color: 'yellow', start: 800, end: 900, description: 'This slot is blocked by 1 person' },
+      900: { color: 'green', start: 900, end: 1000, description: 'This slot is open' },
+      1515: { color: 'green', start: 1515, end: 1530, description: 'This slot is open' }
+    };
+    const emptySlot =  { color: 'white', start: 900, end: 1000, description: 'This slot is blocked' };
     const segments = ["00", "15", "30", "45"];
     const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
     return (
@@ -38,8 +44,11 @@ const Day = (props) => {
               <Grid.Row key={row}>
                 <Grid columns={4}>
                   {segments.map( (label, column) => {
-                    return <Grid.Column color={column%2===0 ? 'red' : 'blue'}>
-                      {militaryTimeForIndex(row*segments.length + column)}
+                    const time = militaryTimeForIndex(row*segments.length + column);
+                    console.log(time, events);
+                    const event = events[time] || emptySlot;
+                    return <Grid.Column>
+                      <Popup content={event.description} trigger={<Button size='mini' color={event.color}/>} />
                     </Grid.Column>;
                   })}
                 </Grid>
