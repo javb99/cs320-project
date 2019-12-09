@@ -2,3 +2,11 @@ body {
   padding: 10px;
   font-family: sans-serif;
 }
+.ui.grid>.column:not(.row).no-padding {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.ui.grid>.row.no-padding {
+  padding-top: 0;
+  padding-bottom: 0;
+}

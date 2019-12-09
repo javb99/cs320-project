@@ -29,11 +29,16 @@ const titleForWeekStart = (weekStart) => {
 }
 
 const Day = (props) => {
-    const events = {
+    const normalizedEvents = {
       800: { color: 'yellow', start: 800, end: 900, description: 'This slot is blocked by 1 person' },
       900: { color: 'green', start: 900, end: 1000, description: 'This slot is open' },
       1515: { color: 'green', start: 1515, end: 1530, description: 'This slot is open' }
     };
+    const eventSlots = {
+      800: { color: 'yellow', start: 800, description: 'This slot is blocked by 1 person' },
+      900: { color: 'green', start: 900, description: 'This slot is open' },
+      1515: { color: 'green', start: 1515, description: 'This slot is open' }
+    }
     const emptySlot =  { color: 'white', start: 900, end: 1000, description: 'This slot is blocked' };
     const segments = ["00", "15", "30", "45"];
     const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
@@ -41,13 +46,13 @@ const Day = (props) => {
         <Grid columns={1}>
           <h1>{props.name + props.date.getDate()}</h1>
           {times.map( (time, row) => (
-              <Grid.Row key={row}>
+              <Grid.Row key={row} className='no-padding'>
                 <Grid columns={4}>
                   {segments.map( (label, column) => {
                     const time = militaryTimeForIndex(row*segments.length + column);
-                    console.log(time, events);
-                    const event = events[time] || emptySlot;
-                    return <Grid.Column>
+                    console.log(time, eventSlots);
+                    const event = eventSlots[time] || emptySlot;
+                    return <Grid.Column className='no-padding'>
                       <Popup content={event.description} trigger={<Button size='mini' color={event.color}/>} />
                     </Grid.Column>;
                   })}
