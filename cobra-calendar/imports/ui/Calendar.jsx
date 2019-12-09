@@ -1,9 +1,9 @@
 import React from 'react'
-import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
 
 const Calendar = (props) => {
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
+  const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
   const weekEndDate = new Date(props.weekStart.getFullYear(), props.weekStart.getMonth(), props.weekStart.getDate()+6);
   return (
       <Container>
@@ -17,11 +17,11 @@ const Calendar = (props) => {
         </Grid>
       </Container>
   )
-}
+};
 
 const Day = (props) => {
     const segments = ["00", "15", "30", "45"];
-    const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"]
+    const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
     return (
         <Grid columns={1}>
           <h1>{props.name + props.date.getDate()}</h1>
@@ -38,7 +38,7 @@ const Day = (props) => {
           ))}
         </Grid>
     );
-}
+};
 
 export default Calendar;
 
