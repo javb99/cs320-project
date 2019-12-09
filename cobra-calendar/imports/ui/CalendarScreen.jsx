@@ -52,7 +52,7 @@ const CalendarScreen = () => {
 
         <Grid.Column stretched width={12}>
           <Segment>
-            <Calendar/>
+            <Calendar now={new Date()} weekStart={new Date(2019, 11, 29)} />
           </Segment>
         </Grid.Column>
 

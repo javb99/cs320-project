@@ -1,14 +1,17 @@
 import React from 'react'
 import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
 
-const Calendar = () => {
+const Calendar = (props) => {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
+  const weekEndDate = new Date(props.weekStart.getFullYear(), props.weekStart.getMonth(), props.weekStart.getDate()+6);
   return (
       <Container>
+        <h1>{ props.weekStart.getDate() + '-' + (weekEndDate.getDate()) + ' ' + months[props.weekStart.getMonth()] + ' ' + props.weekStart.getFullYear() }</h1>
         <Grid celled columns={days.length}>
           {days.map( (day, index) => (
               <Grid.Column key={index}>
-                <Day name={day}/>
+                <Day name={day} date={ new Date(props.weekStart.getFullYear(), props.weekStart.getMonth(), props.weekStart.getDate()+index) } />
               </Grid.Column>
           ))}
         </Grid>
@@ -21,7 +24,7 @@ const Day = (props) => {
     const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"]
     return (
         <Grid columns={1}>
-          <h1>{props.name}</h1>
+          <h1>{props.name + props.date.getDate()}</h1>
           {times.map( (time, row) => (
               <Grid.Row key={row}>
                 <Grid columns={4}>
