@@ -1,8 +1,7 @@
 import ical from 'ical';
 
-async function parseCalendar (promise) {
+export function parseCalendar (data) {
   const eventList = [];
-  const data = await promise;
   for (let k in data) {
     if (data.hasOwnProperty(k)) {
       const ev = data[k];
@@ -24,5 +23,5 @@ function icalParse(url) {
     });
   });
 }
-let eventsPromise = parseCalendar(icalParse('https://learn.wsu.edu/webapps/calendar/calendarFeed/4ed515a26d2b4187bb65e957a6bb8a43/learn.ics'));
-eventsPromise.then((events) => {console.log(events.length + " after return");});
+//let eventsPromise = parseCalendar(icalParse('https://learn.wsu.edu/webapps/calendar/calendarFeed/4ed515a26d2b4187bb65e957a6bb8a43/learn.ics'));
+//eventsPromise.then((events) => {console.log(events.length + " after return");});
