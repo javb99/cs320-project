@@ -28,7 +28,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
 const startDateMatches = (referenceDate) => {
   return (candidateEvent) => matchingDate(referenceDate)(candidateEvent.start);
-}
+};
 
 const matchingDate = (referenceDate) => {
   return (candidateDate) => {
@@ -40,12 +40,12 @@ const matchingDate = (referenceDate) => {
 
 const dateAddingDays = (date, daysOffset) => {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate()+daysOffset)
-}
+};
 
 const titleForWeekStart = (weekStart) => {
   const weekEndDate = dateAddingDays(weekStart, 6);
   return weekStart.getDate() + '-' + (weekEndDate.getDate()) + ' ' + months[weekStart.getMonth()] + ' ' + weekStart.getFullYear()
-}
+};
 
 const normalizeEvents = (events, slotsPerHour) => {
   return events.map((event)=>{
@@ -89,8 +89,12 @@ const splitEventsToSlots = (normalizedEvents, slotsPerHour) => {
   return _.indexBy(eventSlots, 'start');
 };
 
+export const slotsForRawEvents = (events, slotsPerHour) => {
+  return splitEventsToSlots(normalizeEvents(events, slotsPerHour), slotsPerHour);
+};
+
 const Day = (props) => {
-    const eventSlots = splitEventsToSlots(normalizeEvents(props.events, props.slotsPerHour), props.slotsPerHour);
+    const eventSlots = slotsForRawEvents(props.events, props.slotsPerHour);
     const emptySlot =  { color: 'grey', description: 'This slot is blocked' };
     const segments = ["00", "15", "30", "45"];
     const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
