@@ -62,20 +62,15 @@ const slotStartsFor = (start, end, slotLength) => {
     if (time % hour >= 60) { // Check for 61 to 100, should increment the hour.
       time = (time % hour + 1) * hour;
     }
-    console.log('time',time);
   }
   return times;
 };
 
 const splitEventsToSlots = (normalizedEvents, slotsPerHour) => {
-  console.log('split', normalizedEvents, slotsPerHour);
   const eventSlots = _.flatten(_.map(normalizedEvents, (event)=>{
     let slotLength = 60 / slotsPerHour;
-    console.log('event', event);
     const starts = slotStartsFor(event.start, event.end, slotLength);
-    console.log(starts);
     return _.map(starts, (aStart)=>{
-      console.log('aStart', aStart);
       return { color: event.color, start: aStart, description: event.description };
     });
   }));
