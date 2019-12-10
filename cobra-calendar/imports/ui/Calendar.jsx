@@ -72,7 +72,9 @@ const slotStartsFor = (start, end, slotLength) => {
     times.push(time);
     time += slotLength;
     if (time % hour >= 60) { // Check for 61 to 100, should increment the hour.
-      time = (time % hour + 1) * hour;
+      console.log('needs to increment hour', time);
+      time = (Math.floor(time / hour) + 1) * hour;
+      console.log('incremented hour', time);
     }
   }
   return times;
@@ -121,7 +123,6 @@ const Day = (props) => {
 export default Calendar;
 
 function militaryTimeForDate(date) {
-  console.log('date:',date);
   return date.getHours() * 100 + date.getMinutes()
 }
 
