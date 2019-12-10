@@ -12,11 +12,13 @@
   "dependencies": {
     "@babel/runtime": "^7.3.4",
     "chai": "^4.2.0",
+    "history": "^4.10.1",
     "ical": "^0.6.0",
     "meteor-node-stubs": "^0.4.1",
     "mocha": "^6.2.2",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
+    "react-router": "^5.1.2",
     "semantic-ui-react": "^0.88.1",
     "underscore": "^1.9.1"
   },
