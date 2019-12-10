@@ -5,18 +5,19 @@ import CalendarScreen from './CalendarScreen';
 import LogInScreen from './LogInScreen';
 
 const App = () => {
-  const groups = useTracker(() => Groups.find({}).fetch(), []);
+  const groups = useTracker( () => Groups.find({memberIDs: [Meteor.userId()]}).fetch(), [Meteor.userId()] );
+  const user = useTracker( () => Meteor.user() );
   console.log('App.groups', groups);
   return (
   <div>
     <LogInScreen/>
-    <CalendarScreen groups={groups}/>
+    <CalendarScreen groups={groups} createGroupPressed={ () => createGroup(user.username + "'s friends", user._id) }/>
   </div>
 );};
 
 export default App;
-// export default withTracker(() => {
-//   return {
-//     groups: Groups.find({}).fetch(),
-//   };
-// })(App);
+
+const createGroup = (name, ownerID) => {
+  console.log('created group: ', name, ownerID)
+  Groups.insert({ name, ownerID, memberIDs: [ownerID], createdAt: new Date() });
+}

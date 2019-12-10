@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import Groups from '/imports/api/groups';
 
 function insertGroup(name, ownerID) {
-  Groups.insert({ name, ownerID, memberIDs: [ownerID], createdAt: new Date() });
+  Groups.insert({ name: name, ownerID: ownerID, memberIDs: [ownerID], createdAt: new Date() });
 }
 
 Meteor.startup(() => {

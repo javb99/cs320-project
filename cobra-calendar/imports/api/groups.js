@@ -1,3 +1,11 @@
 import { Mongo } from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
 
-export default Groups = new Mongo.Collection('groups');
+const Groups = new Mongo.Collection('groups');
+export default Groups;
+
+Groups.helpers({
+  members() {
+    return Meteor.users.find({_id: {$in: this.memberIDs}});
+  }
+});

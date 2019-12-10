@@ -4,8 +4,9 @@ import * as _ from 'underscore';
 import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
 import Calendar from './Calendar.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import Groups from '../api/groups';
 
-const CalendarScreen = ({groups}) => {
+const CalendarScreen = ({groups, createGroupPressed }) => {
   console.log('groups', groups)
 
   const [selectedGroupIndex, selectGroupIndex] = useState(0);
@@ -32,6 +33,11 @@ const CalendarScreen = ({groups}) => {
                   } }
               />
             })}
+            <Menu.Item
+              key='_new_group_'
+              name='Create Group'
+              onClick={ () => { createGroupPressed() } }
+            />
 
           </Menu>
         </Grid.Column>
@@ -45,14 +51,16 @@ const CalendarScreen = ({groups}) => {
         <Grid.Column width={2}>
           { groups.length > 0
             ? <Menu fluid vertical>
-            {groups[selectedGroupIndex].memberIDs.map( (name, index) =>
+            {groups[selectedGroupIndex].members().fetch().map( (member, index) =>
               <Menu.Item
                   key={index}
-                  name={name}
+                  name={member.username}
                   active={selectedMemberIndexes.includes(index)}
-                  onClick={ () => { setSelectedMemberIndexes(toggleMember(selectedMemberIndexes, index)) }}
+                  onClick={() => {
+                    setSelectedMemberIndexes(toggleMember(selectedMemberIndexes, index))
+                  }}
               />
-            )}
+              )}
           </Menu>
             : '' }
         </Grid.Column>
