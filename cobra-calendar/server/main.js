@@ -1,32 +1,29 @@
 import { Meteor } from 'meteor/meteor';
-import Links from '/imports/api/links';
+import Groups from '/imports/api/groups';
+
 import icalParser from '/imports/ui/icalParser';
 
-function insertLink(title, url) {
-  Links.insert({ title, url, createdAt: new Date() });
+function insertGroup(name, ownerID) {
+  Groups.insert({ name: name, ownerID: ownerID, memberIDs: [ownerID], createdAt: new Date() });
 }
 
 Meteor.startup(() => {
-  // If the Links collection is empty, add some data.
-  if (Links.find().count() === 0) {
-    insertLink(
-      'Do the Tutorial',
-      'https://www.meteor.com/tutorials/react/creating-an-app'
+  // If the Groups collection is empty, add some data.
+  if (Groups.find({}).count() === 0) {
+
+    insertGroup(
+      'WSU',
+      'aMPrYzdFZ2aC47ELS'
     );
 
-    insertLink(
-      'Follow the Guide',
-      'http://guide.meteor.com'
+    insertGroup(
+      'Clark',
+      'aMPrYzdFZ2aC47ELS'
     );
 
-    insertLink(
-      'Read the Docs',
-      'https://docs.meteor.com'
-    );
-
-    insertLink(
-      'Discussions',
-      'https://forums.meteor.com'
+    insertGroup(
+      'Crossroads',
+      'aMPrYzdFZ2aC47ELS'
     );
   }
 });

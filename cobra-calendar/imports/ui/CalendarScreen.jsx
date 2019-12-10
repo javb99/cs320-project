@@ -2,35 +2,22 @@ import React, { useState } from 'react'
 
 import * as _ from 'underscore';
 import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
-import Calendar from '/imports/ui/Calendar';
+import Calendar from './Calendar.jsx';
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import Groups from '../api/groups';
 
-const CalendarScreen = () => {
-  const groups = [
-    {
-      name: 'WSU CS Juniors',
-      members: [
-          'Jakob Miner',
-          'Joseph Van Boxtel',
-          'Daniel Brown'
-      ]
-    }, {
-      name: 'PNDLM',
-      members: [
-        'Jeff',
-        'Joseph Van Boxtel'
-      ]
-    }
-  ];
+const CalendarScreen = ({groups, createGroupPressed }) => {
+  console.log('groups', groups)
 
   const [selectedGroupIndex, selectGroupIndex] = useState(0);
-  const selectedGroup = groups[selectedGroupIndex];
 
-  const [selectedMemberIndexes, setSelectedMemberIndexes] = useState(_.range(selectedGroup.members.length));
+  const [selectedMemberIndexes, setSelectedMemberIndexes] = useState(groups.length > 0 ? _.range(groups[selectedGroupIndex].memberIDs.length) : []);
 
-  console.log(groups, selectedGroupIndex, selectedGroup);
+  console.log(groups, selectedGroupIndex);
   return (
       <div>
       <Header>Cobra Calendar</Header>
+      <AccountsUIWrapper/>
       <Grid>
         <Grid.Column width={2}>
           <Menu fluid vertical pointing>
@@ -42,10 +29,15 @@ const CalendarScreen = () => {
                   onClick={ () => {
                     selectGroupIndex(index)
                     // Select all members of the new group.
-                    setSelectedMemberIndexes(_.range(groups[index].members.length));
+                    setSelectedMemberIndexes(_.range(groups[index].memberIDs.length));
                   } }
               />
             })}
+            <Menu.Item
+              key='_new_group_'
+              name='Create Group'
+              onClick={ () => { createGroupPressed() } }
+            />
 
           </Menu>
         </Grid.Column>
@@ -57,17 +49,20 @@ const CalendarScreen = () => {
         </Grid.Column>
 
         <Grid.Column width={2}>
-          <Menu fluid vertical>
-            {groups[selectedGroupIndex].members.map( (name, index) => {
-
-              return <Menu.Item
+          { groups.length > 0
+            ? <Menu fluid vertical>
+            {groups[selectedGroupIndex].members().fetch().map( (member, index) =>
+              <Menu.Item
                   key={index}
-                  name={name}
+                  name={member.username}
                   active={selectedMemberIndexes.includes(index)}
-                  onClick={ () => { setSelectedMemberIndexes(toggleMember(selectedMemberIndexes, index)) }}
+                  onClick={() => {
+                    setSelectedMemberIndexes(toggleMember(selectedMemberIndexes, index))
+                  }}
               />
-            })}
+              )}
           </Menu>
+            : '' }
         </Grid.Column>
       </Grid>
       </div>
