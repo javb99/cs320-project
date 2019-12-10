@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Grid, Button, Popup } from 'semantic-ui-react'
+import * as _ from 'underscore';
 
 const Calendar = (props) => {
   const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
@@ -28,18 +29,62 @@ const titleForWeekStart = (weekStart) => {
   return weekStart.getDate() + '-' + (weekEndDate.getDate()) + ' ' + months[weekStart.getMonth()] + ' ' + weekStart.getFullYear()
 }
 
-const Day = (props) => {
-    const normalizedEvents = {
-      800: { color: 'yellow', start: 800, end: 900, description: 'This slot is blocked by 1 person' },
-      900: { color: 'green', start: 900, end: 1000, description: 'This slot is open' },
-      1515: { color: 'green', start: 1515, end: 1530, description: 'This slot is open' }
-    };
-    const eventSlots = {
-      800: { color: 'yellow', start: 800, description: 'This slot is blocked by 1 person' },
-      900: { color: 'green', start: 900, description: 'This slot is open' },
-      1515: { color: 'green', start: 1515, description: 'This slot is open' }
+const normalizeEvents = (events, slotsPerHour) => {
+  return events.map((event)=>{
+    const slotLength = 60 / slotsPerHour;
+    let start = event.start;
+    const startMin = start % 100;
+    if (startMin % slotLength > 0) {
+      start = start + (slotLength - startMin % slotLength); // Round up to nearest slot.
     }
-    const emptySlot =  { color: 'white', start: 900, end: 1000, description: 'This slot is blocked' };
+    let end = event.end;
+    const endMin = end % 100;
+    if (endMin % slotLength > 0) {
+      end = end - endMin % slotLength; // Round down to nearest slot
+    }
+    return { color: event.color, start: start, end: end, description: event.description };
+  })
+};
+
+const hour = 100;
+
+const slotStartsFor = (start, end, slotLength) => {
+  let times = [];
+  for (let time = start; time < end;) {
+    times.push(time);
+    time += slotLength;
+    if (time % hour >= 60) { // Check for 61 to 100, should increment the hour.
+      time = (time % hour + 1) * hour;
+    }
+    console.log('time',time);
+  }
+  return times;
+};
+
+const splitEventsToSlots = (normalizedEvents, slotsPerHour) => {
+  console.log('split', normalizedEvents, slotsPerHour);
+  const eventSlots = _.flatten(_.map(normalizedEvents, (event)=>{
+    let slotLength = 60 / slotsPerHour;
+    console.log('event', event);
+    const starts = slotStartsFor(event.start, event.end, slotLength);
+    console.log(starts);
+    return _.map(starts, (aStart)=>{
+      console.log('aStart', aStart);
+      return { color: event.color, start: aStart, description: event.description };
+    });
+  }));
+  return _.indexBy(eventSlots, 'start');
+};
+
+const Day = (props) => {
+    const events = [
+        { color: 'yellow', start: 800, end: 900, description: 'This slot is blocked by 1 person' },
+        { color: 'green', start: 900, end: 1000, description: 'This slot is open' },
+        { color: 'yellow', start: 1311, end: 1400, description: 'This slot is blocked by 1 person' },
+        { color: 'green', start: 1515, end: 1530, description: 'This slot is open' }
+    ];
+    const eventSlots = splitEventsToSlots(normalizeEvents(events, 4), 4);
+    const emptySlot =  { color: 'grey', start: 900, end: 1000, description: 'This slot is blocked' };
     const segments = ["00", "15", "30", "45"];
     const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
     return (
@@ -50,7 +95,7 @@ const Day = (props) => {
                 <Grid columns={4}>
                   {segments.map( (label, column) => {
                     const time = militaryTimeForIndex(row*segments.length + column);
-                    console.log(time, eventSlots);
+                    //console.log(time, eventSlots);
                     const event = eventSlots[time] || emptySlot;
                     return <Grid.Column className='no-padding'>
                       <Popup content={event.description} trigger={<Button size='mini' color={event.color}/>} />
