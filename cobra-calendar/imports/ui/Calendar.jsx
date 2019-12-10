@@ -4,11 +4,12 @@ import * as _ from 'underscore';
 
 const Calendar = (props) => {
   const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-  const events = [
-    { color: 'yellow', start: new Date(2019, 11, 30, 12, 15), end: new Date(2019, 11, 30, 12, 30), description: 'This slot is blocked by 1 person' },
-    { color: 'green', start: new Date(2019, 11, 29, 9, 0), end: new Date(2019, 11, 29, 10, 15), description: 'This slot is open' },
-    { color: 'green', start: new Date(2020, 0, 1, 11, 0), end: new Date(2020, 0, 1, 15, 15), description: 'This slot is open' },
-  ];
+  // const events = [
+  //   { color: 'yellow', start: new Date(2019, 11, 30, 12, 15), end: new Date(2019, 11, 30, 12, 30), description: 'This slot is blocked by 1 person' },
+  //   { color: 'green', start: new Date(2019, 11, 29, 9, 0), end: new Date(2019, 11, 29, 10, 15), description: 'This slot is open' },
+  //   { color: 'green', start: new Date(2020, 0, 1, 11, 0), end: new Date(2020, 0, 1, 15, 15), description: 'This slot is open' },
+  // ];
+  const events = this.events;
   return (
       <Container>
         <h1>{ titleForWeekStart(props.weekStart) }</h1>
@@ -97,7 +98,7 @@ export const slotsForRawEvents = (events, slotsPerHour) => {
 
 const Day = (props) => {
     const eventSlots = slotsForRawEvents(props.events, props.slotsPerHour);
-    const emptySlot =  { color: 'grey', description: 'This slot is blocked' };
+    const emptySlot =  { color: 'green', description: 'This slot is blocked' };
     const segments = ["00", "15", "30", "45"];
     const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
     return (

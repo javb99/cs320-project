@@ -4,7 +4,8 @@ import * as _ from 'underscore';
 import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
 import Calendar from './Calendar.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
-import Groups from '../api/groups';
+import Calendars from '../api/calendars';
+import { Meteor } from 'meteor/meteor';
 
 const CalendarScreen = ({groups, createGroupPressed }) => {
   console.log('groups', groups)
@@ -13,6 +14,9 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
 
   const [selectedMemberIndexes, setSelectedMemberIndexes] = useState(groups.length > 0 ? _.range(groups[selectedGroupIndex].memberIDs.length) : []);
 
+  const events = Calendars.find({ownerIDs: [Meteor.userID]}).map((cal)=>cal.events().fetch());
+  const presentableEvents = _.map(events, (event)=>({color:'green', start: event.start, end: event.end, description:'blocked'}));
+  console.log('events from calendars', events, presentableEvents);
   console.log(groups, selectedGroupIndex);
   return (
       <div>
@@ -44,7 +48,7 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
 
         <Grid.Column stretched width={12}>
           <Segment>
-            <Calendar now={new Date()} weekStart={new Date(2019, 11, 29)} />
+            <Calendar now={new Date()} weekStart={new Date(2019, 11, 29)} events={presentableEvents}/>
           </Segment>
         </Grid.Column>
 
@@ -62,7 +66,7 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
               />
               )}
           </Menu>
-            : '' }
+            : 'no groups' }
         </Grid.Column>
       </Grid>
       </div>
