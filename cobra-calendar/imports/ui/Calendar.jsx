@@ -4,13 +4,19 @@ import * as _ from 'underscore';
 
 const Calendar = (props) => {
   const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+  const events = [
+    { color: 'yellow', start: 800, end: 900, description: 'This slot is blocked by 1 person' },
+    { color: 'green', start: 900, end: 1000, description: 'This slot is open' },
+    { color: 'yellow', start: 1311, end: 1400, description: 'This slot is blocked by 1 person' },
+    { color: 'green', start: 1515, end: 1530, description: 'This slot is open' }
+  ];
   return (
       <Container>
         <h1>{ titleForWeekStart(props.weekStart) }</h1>
         <Grid celled columns={days.length}>
           {days.map( (day, index) => (
               <Grid.Column key={index}>
-                <Day name={day} date={ dateAddingDays(props.weekStart, index) } />
+                <Day name={day} date={ dateAddingDays(props.weekStart, index) } events={events} slotsPerHour={4} />
               </Grid.Column>
           ))}
         </Grid>
@@ -77,14 +83,8 @@ const splitEventsToSlots = (normalizedEvents, slotsPerHour) => {
 };
 
 const Day = (props) => {
-    const events = [
-        { color: 'yellow', start: 800, end: 900, description: 'This slot is blocked by 1 person' },
-        { color: 'green', start: 900, end: 1000, description: 'This slot is open' },
-        { color: 'yellow', start: 1311, end: 1400, description: 'This slot is blocked by 1 person' },
-        { color: 'green', start: 1515, end: 1530, description: 'This slot is open' }
-    ];
-    const eventSlots = splitEventsToSlots(normalizeEvents(events, 4), 4);
-    const emptySlot =  { color: 'grey', start: 900, end: 1000, description: 'This slot is blocked' };
+    const eventSlots = splitEventsToSlots(normalizeEvents(props.events, props.slotsPerHour), props.slotsPerHour);
+    const emptySlot =  { color: 'grey', description: 'This slot is blocked' };
     const segments = ["00", "15", "30", "45"];
     const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
     return (
@@ -95,7 +95,6 @@ const Day = (props) => {
                 <Grid columns={4}>
                   {segments.map( (label, column) => {
                     const time = militaryTimeForIndex(row*segments.length + column);
-                    //console.log(time, eventSlots);
                     const event = eventSlots[time] || emptySlot;
                     return <Grid.Column className='no-padding'>
                       <Popup content={event.description} trigger={<Button size='mini' color={event.color}/>} />
