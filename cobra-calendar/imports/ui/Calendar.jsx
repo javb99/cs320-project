@@ -5,26 +5,38 @@ import * as _ from 'underscore';
 const Calendar = (props) => {
   const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
   const events = [
-    { color: 'yellow', start: 800, end: 900, description: 'This slot is blocked by 1 person' },
-    { color: 'green', start: 900, end: 1000, description: 'This slot is open' },
-    { color: 'yellow', start: 1311, end: 1400, description: 'This slot is blocked by 1 person' },
-    { color: 'green', start: 1515, end: 1530, description: 'This slot is open' }
+    { color: 'yellow', start: new Date(2019, 11, 30, 12, 15), end: new Date(2019, 11, 30, 12, 30), description: 'This slot is blocked by 1 person' },
+    { color: 'green', start: new Date(2019, 11, 29, 9, 0), end: new Date(2019, 11, 29, 10, 15), description: 'This slot is open' },
+    { color: 'green', start: new Date(2020, 0, 1, 11, 0), end: new Date(2020, 0, 1, 15, 15), description: 'This slot is open' },
   ];
   return (
       <Container>
         <h1>{ titleForWeekStart(props.weekStart) }</h1>
         <Grid celled columns={days.length}>
-          {days.map( (day, index) => (
-              <Grid.Column key={index}>
-                <Day name={day} date={ dateAddingDays(props.weekStart, index) } events={events} slotsPerHour={4} />
-              </Grid.Column>
-          ))}
+          {days.map( (day, index) => {
+              const date = dateAddingDays(props.weekStart, index);
+              return <Grid.Column key={index}>
+                <Day name={day} date={date} events={ _.filter(events, startDateMatches(date)) } slotsPerHour={4} />
+              </Grid.Column>;
+          })}
         </Grid>
       </Container>
   )
 };
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const startDateMatches = (referenceDate) => {
+  return (candidateEvent) => matchingDate(referenceDate)(candidateEvent.start);
+}
+
+const matchingDate = (referenceDate) => {
+  return (candidateDate) => {
+    return candidateDate.getDate() === referenceDate.getDate()
+        && candidateDate.getFullYear() === referenceDate.getFullYear()
+        && candidateDate.getMonth() === referenceDate.getMonth();
+  };
+};
 
 const dateAddingDays = (date, daysOffset) => {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate()+daysOffset)
@@ -38,12 +50,12 @@ const titleForWeekStart = (weekStart) => {
 const normalizeEvents = (events, slotsPerHour) => {
   return events.map((event)=>{
     const slotLength = 60 / slotsPerHour;
-    let start = event.start;
+    let start = militaryTimeForDate(event.start);
     const startMin = start % 100;
     if (startMin % slotLength > 0) {
       start = start + (slotLength - startMin % slotLength); // Round up to nearest slot.
     }
-    let end = event.end;
+    let end = militaryTimeForDate(event.end);
     const endMin = end % 100;
     if (endMin % slotLength > 0) {
       end = end - endMin % slotLength; // Round down to nearest slot
@@ -103,6 +115,11 @@ const Day = (props) => {
 };
 
 export default Calendar;
+
+function militaryTimeForDate(date) {
+  console.log('date:',date);
+  return date.getHours() * 100 + date.getMinutes()
+}
 
 // Takes an index in the 4/13 array representing 8am to 8pm and returns the integer representing the 24 hour time.
 // For example index 0 -> 800, index 51 -> 2045
