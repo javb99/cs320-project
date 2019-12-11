@@ -1,7 +1,7 @@
 import React from 'react'
 import {
   Button,
-  Grid,
+  Grid, Popup,
   TableHeaderCell
 } from 'semantic-ui-react'
 import { Meteor } from 'meteor/meteor';
@@ -11,6 +11,7 @@ import TableRow from 'semantic-ui-react/dist/commonjs/collections/Table/TableRow
 import * as Users from '../api/users';
 import Calendars from '../api/calendars';
 import { useTracker } from 'meteor/react-meteor-data';
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
 
 const ProfileScreen = () => {
   const calendars = useTracker( () => Meteor.user().getCalendars().fetch());
@@ -30,6 +31,11 @@ const MyCalendarsList = ({calendars}) => (
       <TableHeader>
         <TableHeaderCell>
           My Calendars
+          <Popup on='click' position='top right' content={
+            <URLImportForm importCalendar={(name, url) => Meteor.call('addCalendar', name, url, (error, result) => { console.log('completed add', error, result); })}/>
+          } trigger={
+            <Button icon="plus" floated='right'/>
+          }/>
         </TableHeaderCell>
       </TableHeader>
       {_.map(calendars, (calendar, index) =>
@@ -44,3 +50,25 @@ const MyCalendarsList = ({calendars}) => (
       )}
     </Table>
 );
+const URLImportForm = ({importCalendar}) => {
+  const handleSubmit = (event) => {
+    const data = new FormData(event.target);
+    importCalendar(data.get('name'), data.get('url'));
+  }
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Form.Group>
+        <Form.Input
+            placeholder='Name'
+            name='name'
+        />
+        <Form.Input
+            placeholder='ICal URL'
+            name='url'
+        />
+        <Form.Button content='Submit'/>
+      </Form.Group>
+    </Form>
+  )
+};
