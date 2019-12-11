@@ -9,9 +9,11 @@ import Table from 'semantic-ui-react/dist/commonjs/collections/Table';
 import TableHeader from 'semantic-ui-react/dist/commonjs/collections/Table/TableHeader';
 import TableRow from 'semantic-ui-react/dist/commonjs/collections/Table/TableRow';
 import * as Users from '../api/users';
+import Calendars from '../api/calendars';
+import { useTracker } from 'meteor/react-meteor-data';
 
 const ProfileScreen = () => {
-  const calendars = Meteor.user().getCalendars().fetch();
+  const calendars = useTracker( () => Meteor.user().getCalendars().fetch());
   return (
   <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
@@ -32,7 +34,12 @@ const MyCalendarsList = ({calendars}) => (
       </TableHeader>
       {_.map(calendars, (calendar, index) =>
           <TableRow key={index}>
-            {calendar.name}<Button icon="close" floated='right'/>
+            {calendar.name}
+            <Button
+                icon="close"
+                floated='right'
+                onClick={ () => Calendars.remove({_id: calendar._id})}
+            />
           </TableRow>
       )}
     </Table>
