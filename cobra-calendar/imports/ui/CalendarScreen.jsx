@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 
 import * as _ from 'underscore';
-import { Button, Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
+import { Button, Container, Divider, Grid, Header, Menu, Message, Popup, Segment, Table } from 'semantic-ui-react'
 import Calendar from './Calendar.jsx';
 import Calendars from '../api/calendars';
 import { Meteor } from 'meteor/meteor';
 import { dateAddingDays } from './Calendar';
 import AppMenu from './AppMenu';
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
 
-const CalendarScreen = ({groups, createGroupPressed }) => {
+const CalendarScreen = ({groups, createGroup }) => {
 
   const [selectedGroupIndex, selectGroupIndex] = useState(0);
 
@@ -50,12 +51,13 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
                   } }
               />
             })}
-            <Menu.Item
-              key='_new_group_'
-              name='Create Group'
-              onClick={ () => { createGroupPressed() } }
-            />
-
+            <Menu.Item key='_new_group_'>
+              <Popup on='click' content={
+                <CreateGroupForm createGroup={createGroup} />
+              } trigger={
+                <Button>Create Group</Button>
+              }/>
+            </Menu.Item>
           </Menu>
         </Grid.Column>
 
@@ -105,3 +107,25 @@ export function toggleMember(selection, member){
 export function weekStartForDate(date) {
   return dateAddingDays(date, -date.getDay());
 }
+
+const CreateGroupForm = ({createGroup}) => {
+  const handleSubmit = (event) => {
+    const data = new FormData(event.target);
+    createGroup(data.get('name'), data.get('password'));
+  }
+  return (
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Input
+              placeholder='Name'
+              name='name'
+          />
+          <Form.Input
+              placeholder='Password'
+              name='password'
+          />
+          <Form.Button content='Submit'/>
+        </Form.Group>
+      </Form>
+  )
+};

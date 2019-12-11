@@ -10,13 +10,13 @@ const App = () => {
   console.log('App.groups', groups);
   return (
   <div>
-    <CalendarScreen groups={groups} createGroupPressed={ () => createGroup(user.username + "'s friends", user._id) }/>
+    <CalendarScreen groups={groups} createGroup={createGroup}/>
   </div>
 );};
 
 export default App;
 
-const createGroup = (name, ownerID) => {
-  console.log('created group: ', name, ownerID)
-  Groups.insert({ name, ownerID, memberIDs: [ownerID], createdAt: new Date() });
+const createGroup = (name, password) => {
+  const userID = Meteor.userId();
+  Groups.insert({ name, password, ownerID: userID, memberIDs: [userID], createdAt: new Date() });
 }
