@@ -16,10 +16,11 @@ export function parseCalendar (data) {
   }
   return eventList;
 }
-function icalParse(url) {
+export default function parseICalContentsOf(url) {
   return new Promise( resolve => {
     ical.fromURL(url, {}, function (err, data) {
-      resolve(data);
+      console.log('parsing data', data, 'error', err);
+      resolve(parseCalendar(data));
     });
   });
 }

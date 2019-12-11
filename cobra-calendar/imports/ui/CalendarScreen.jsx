@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
 import * as _ from 'underscore';
-import { Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
+import { Button, Container, Divider, Grid, Header, Menu, Message, Segment, Table } from 'semantic-ui-react'
 import Calendar from './Calendar.jsx';
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
-import Groups from '../api/groups';
+import Calendars from '../api/calendars';
+import { Meteor } from 'meteor/meteor';
 
 const CalendarScreen = ({groups, createGroupPressed }) => {
   console.log('groups', groups)
@@ -13,11 +13,16 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
 
   const [selectedMemberIndexes, setSelectedMemberIndexes] = useState(groups.length > 0 ? _.range(groups[selectedGroupIndex].memberIDs.length) : []);
 
+  const userID = Meteor.userId();
+  const calendars = Calendars.find({ownerID: userID});
+  const events = _.flatten(_.toArray(calendars.map((cal)=>cal.events().fetch())));
+  const presentableEvents = _.map(events, (event)=>({color:'red', start: event.start, end: event.end, description:'blocked'}));
+  console.log('events from calendars', userID, calendars.fetch(), events, presentableEvents);
   console.log(groups, selectedGroupIndex);
   return (
       <div>
       <Header>Cobra Calendar</Header>
-      <AccountsUIWrapper/>
+      <Button onClick={importCalendarPressed} />
       <Grid>
         <Grid.Column width={2}>
           <Menu fluid vertical pointing>
@@ -44,7 +49,7 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
 
         <Grid.Column stretched width={12}>
           <Segment>
-            <Calendar now={new Date()} weekStart={new Date(2019, 11, 29)} />
+            <Calendar now={new Date()} weekStart={new Date(2019, 11, 8)} events={presentableEvents}/>
           </Segment>
         </Grid.Column>
 
@@ -62,7 +67,7 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
               />
               )}
           </Menu>
-            : '' }
+            : 'no groups' }
         </Grid.Column>
       </Grid>
       </div>
@@ -83,4 +88,10 @@ export function toggleMember(selection, member){
   } else {
     return selection.concat([member]);
   }
+}
+
+
+function importCalendarPressed() {
+  const url = 'https://services.planningcenteronline.com/ical/pnb/PCvcJcItR7pe2x5rHa14QqXgoekWaxZh9508246';// 'https://learn.wsu.edu/webapps/calendar/calendarFeed/c91d0f63cc4a4f06bebe41c4782207b2/learn.ics';
+  Meteor.call('addCalendar', 'my cal', url, (error, result) => { console.log('completed add', error, result); });
 }
