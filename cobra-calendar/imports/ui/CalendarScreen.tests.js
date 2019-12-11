@@ -3,6 +3,7 @@
 
 import assert from 'assert';
 import { toggleMember } from './CalendarScreen.jsx';
+import { weekStartForDate } from './CalendarScreen';
 
 if (Meteor.isClient) {
   describe('toggleMember()', function () {
@@ -18,6 +19,18 @@ if (Meteor.isClient) {
       toggleMember(startingValue, member);
       assert.deepEqual(startingValue, ['a']);
       assert.equal(member, 'a');
+    });
+  });
+  describe('weekStartForDate()', function () {
+    it('returns previous sunday given non-sunday', function () {
+      const weekStart = weekStartForDate(new Date(2019, 11, 11));
+      assert.equal(weekStart.getDay(), 0);
+      assert.equal(weekStart.getDate(), 8);
+    });
+    it('returns same given sunday', function () {
+      const weekStart = weekStartForDate(new Date(2019, 11, 8));
+      assert.equal(weekStart.getDay(), 0);
+      assert.equal(weekStart.getDate(), 8);
     });
   });
 }
