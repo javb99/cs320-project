@@ -8,6 +8,7 @@ import LogInScreen from '../imports/ui/LogInScreen';
 import Authenticated from './Authenticated';
 import Public from './Public';
 import { useTracker } from 'meteor/react-meteor-data';
+import SignUpScreen from '../imports/ui/SignUpScreen';
 
 const browserHistory = createBrowserHistory();
 
@@ -20,6 +21,7 @@ export const RenderRoutes = () => {
       <Router history={browserHistory}>
         <Switch>
           <Public exact path="/login" component={LogInScreen} authenticated={authenticated} loggingIn={loggingIn} />
+          <Public exact path="/signup" component={SignUpScreen} authenticated={authenticated} loggingIn={loggingIn} />
           <Authenticated exact path="/" component={App} authenticated={authenticated} loggingIn={loggingIn} />
         </Switch>
       </Router>
