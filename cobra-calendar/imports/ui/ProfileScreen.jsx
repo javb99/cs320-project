@@ -12,15 +12,19 @@ import * as Users from '../api/users';
 import Calendars from '../api/calendars';
 import { useTracker } from 'meteor/react-meteor-data';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
+import AppMenu from './AppMenu';
 
 const ProfileScreen = () => {
   const calendars = useTracker( () => Meteor.user().getCalendars().fetch());
   return (
-  <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-    <Grid.Column style={{ maxWidth: 450 }}>
-      <MyCalendarsList calendars={calendars}/>
-    </Grid.Column>
-  </Grid>
+    <div>
+      <AppMenu />
+      <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <MyCalendarsList calendars={calendars}/>
+        </Grid.Column>
+      </Grid>
+    </div>
 );
 };
 

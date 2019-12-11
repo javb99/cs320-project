@@ -6,9 +6,9 @@ import Calendar from './Calendar.jsx';
 import Calendars from '../api/calendars';
 import { Meteor } from 'meteor/meteor';
 import { dateAddingDays } from './Calendar';
+import AppMenu from './AppMenu';
 
 const CalendarScreen = ({groups, createGroupPressed }) => {
-  console.log('groups', groups)
 
   const [selectedGroupIndex, selectGroupIndex] = useState(0);
 
@@ -33,8 +33,8 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
   console.log('events from calendars', userID, calendars.fetch(), events, presentableEvents);
   console.log(groups, selectedGroupIndex);
   return (
-      <div>
-      <Header>Cobra Calendar</Header>
+    <div>
+      <AppMenu />
       <Grid>
         <Grid.Column width={2}>
           <Menu fluid vertical pointing>
