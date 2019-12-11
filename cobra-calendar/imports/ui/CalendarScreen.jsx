@@ -5,6 +5,7 @@ import { Button, Container, Divider, Grid, Header, Menu, Message, Segment, Table
 import Calendar from './Calendar.jsx';
 import Calendars from '../api/calendars';
 import { Meteor } from 'meteor/meteor';
+import { dateAddingDays } from './Calendar';
 
 const CalendarScreen = ({groups, createGroupPressed }) => {
   console.log('groups', groups)
@@ -12,6 +13,14 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
   const [selectedGroupIndex, selectGroupIndex] = useState(0);
 
   const [selectedMemberIndexes, setSelectedMemberIndexes] = useState(groups.length > 0 ? _.range(groups[selectedGroupIndex].memberIDs.length) : []);
+  const [weekStart, setWeekStart] = useState(new Date(2019, 11, 8));
+
+  const prevWeek = () => {
+    setWeekStart(dateAddingDays(weekStart, -7));
+  };
+  const nextWeek = () => {
+    setWeekStart(dateAddingDays(weekStart, +7));
+  };
 
   const userID = Meteor.userId();
   const calendars = Calendars.find({ownerID: userID});
@@ -49,7 +58,7 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
 
         <Grid.Column stretched width={12}>
           <Segment>
-            <Calendar now={new Date()} weekStart={new Date(2019, 11, 8)} events={presentableEvents}/>
+            <Calendar now={new Date()} weekStart={weekStart} events={presentableEvents} prev={prevWeek} next={nextWeek}/>
           </Segment>
         </Grid.Column>
 
@@ -95,3 +104,4 @@ function importCalendarPressed() {
   const url = 'https://services.planningcenteronline.com/ical/pnb/PCvcJcItR7pe2x5rHa14QqXgoekWaxZh9508246';// 'https://learn.wsu.edu/webapps/calendar/calendarFeed/c91d0f63cc4a4f06bebe41c4782207b2/learn.ics';
   Meteor.call('addCalendar', 'my cal', url, (error, result) => { console.log('completed add', error, result); });
 }
+

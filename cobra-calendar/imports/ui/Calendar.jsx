@@ -7,7 +7,11 @@ const Calendar = (props) => {
   const events = props.events;
   return (
       <Container>
-        <h1>{ titleForWeekStart(props.weekStart) }</h1>
+        <h1>
+          <Button icon="angle left" onClick={props.prev}/>
+          { titleForWeekStart(props.weekStart) }
+          <Button icon="angle right" onClick={props.next}/>
+        </h1>
         <Grid celled columns={days.length}>
           {days.map( (day, index) => {
               const date = dateAddingDays(props.weekStart, index);
@@ -34,7 +38,7 @@ const matchingDate = (referenceDate) => {
   };
 };
 
-const dateAddingDays = (date, daysOffset) => {
+export const dateAddingDays = (date, daysOffset) => {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate()+daysOffset)
 };
 
