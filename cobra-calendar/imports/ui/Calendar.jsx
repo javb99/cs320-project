@@ -43,18 +43,18 @@ const titleForWeekStart = (weekStart) => {
   return weekStart.getDate() + '-' + (weekEndDate.getDate()) + ' ' + months[weekStart.getMonth()] + ' ' + weekStart.getFullYear()
 };
 
-const normalizeEvents = (events, slotsPerHour) => {
+export const normalizeEvents = (events, slotsPerHour) => {
   return events.map((event)=>{
     const slotLength = 60 / slotsPerHour;
     let start = militaryTimeForDate(event.start);
     const startMin = start % 100;
     if (startMin % slotLength > 0) {
-      start = start + (slotLength - startMin % slotLength); // Round up to nearest slot.
+      start = start - startMin % slotLength; // Round down to nearest slot
     }
     let end = militaryTimeForDate(event.end);
     const endMin = end % 100;
     if (endMin % slotLength > 0) {
-      end = end - endMin % slotLength; // Round down to nearest slot
+      end = end + (slotLength - endMin % slotLength); // Round up to nearest slot.
     }
     return { color: event.color, start: start, end: end, description: event.description };
   })
