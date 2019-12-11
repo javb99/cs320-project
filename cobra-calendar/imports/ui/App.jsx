@@ -10,7 +10,6 @@ const App = () => {
   console.log('App.groups', groups);
   return (
   <div>
-    <LogInScreen/>
     <CalendarScreen groups={groups} createGroupPressed={ () => createGroup(user.username + "'s friends", user._id) }/>
   </div>
 );};
