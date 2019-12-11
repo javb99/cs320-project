@@ -35,7 +35,6 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
   return (
       <div>
       <Header>Cobra Calendar</Header>
-      <Button onClick={importCalendarPressed} />
       <Grid>
         <Grid.Column width={2}>
           <Menu fluid vertical pointing>
@@ -101,11 +100,6 @@ export function toggleMember(selection, member){
   } else {
     return selection.concat([member]);
   }
-}
-
-function importCalendarPressed() {
-  const url = 'https://services.planningcenteronline.com/ical/pnb/PCvcJcItR7pe2x5rHa14QqXgoekWaxZh9508246';// 'https://learn.wsu.edu/webapps/calendar/calendarFeed/c91d0f63cc4a4f06bebe41c4782207b2/learn.ics';
-  Meteor.call('addCalendar', 'my cal', url, (error, result) => { console.log('completed add', error, result); });
 }
 
 export function weekStartForDate(date) {
