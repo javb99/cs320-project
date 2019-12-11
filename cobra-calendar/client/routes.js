@@ -19,7 +19,7 @@ export const RenderRoutes = () => {
   return (
       <Router history={browserHistory}>
         <Switch>
-          <Route exact path="/login" component={LogInScreen} authenticated={authenticated} loggingIn={loggingIn} />
+          <Public exact path="/login" component={LogInScreen} authenticated={authenticated} loggingIn={loggingIn} />
           <Authenticated exact path="/" component={App} authenticated={authenticated} loggingIn={loggingIn} />
         </Switch>
       </Router>
