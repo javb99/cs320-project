@@ -9,8 +9,9 @@ const Calendar = (props) => {
       <Container>
         <h1>
           <Button icon="angle left" onClick={props.prev}/>
-          { titleForWeekStart(props.weekStart) }
           <Button icon="angle right" onClick={props.next}/>
+          { titleForWeekStart(props.weekStart) }
+          <Button onClick={props.goToToday}>Today</Button>
         </h1>
         <Grid celled columns={days.length}>
           {days.map( (day, index) => {

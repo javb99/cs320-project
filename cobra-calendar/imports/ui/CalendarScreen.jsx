@@ -13,13 +13,17 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
   const [selectedGroupIndex, selectGroupIndex] = useState(0);
 
   const [selectedMemberIndexes, setSelectedMemberIndexes] = useState(groups.length > 0 ? _.range(groups[selectedGroupIndex].memberIDs.length) : []);
-  const [weekStart, setWeekStart] = useState(new Date(2019, 11, 8));
+  const now = new Date();
+  const [weekStart, setWeekStart] = useState(weekStartForDate(now));
 
   const prevWeek = () => {
     setWeekStart(dateAddingDays(weekStart, -7));
   };
   const nextWeek = () => {
     setWeekStart(dateAddingDays(weekStart, +7));
+  };
+  const goToToday = () => {
+    setWeekStart(weekStartForDate(now));
   };
 
   const userID = Meteor.userId();
@@ -58,7 +62,7 @@ const CalendarScreen = ({groups, createGroupPressed }) => {
 
         <Grid.Column stretched width={12}>
           <Segment>
-            <Calendar now={new Date()} weekStart={weekStart} events={presentableEvents} prev={prevWeek} next={nextWeek}/>
+            <Calendar now={now} weekStart={weekStart} events={presentableEvents} prev={prevWeek} next={nextWeek} goToToday={goToToday}/>
           </Segment>
         </Grid.Column>
 
