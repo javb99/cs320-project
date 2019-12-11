@@ -24,7 +24,7 @@ export const RenderRoutes = () => {
           <Public exact path="/login" component={LogInScreen} authenticated={authenticated} loggingIn={loggingIn} />
           <Public exact path="/signup" component={SignUpScreen} authenticated={authenticated} loggingIn={loggingIn} />
           <Authenticated exact path="/" component={App} authenticated={authenticated} loggingIn={loggingIn} />
-          <Authenticated exact path="/profile" component={Profile} authenticated={authenticated} loggingIn={loggingIn} />
+          <Authenticated exact path="/profile" component={ProfileScreen} authenticated={authenticated} loggingIn={loggingIn} />
         </Switch>
       </Router>
   );
