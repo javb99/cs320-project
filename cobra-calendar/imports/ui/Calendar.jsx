@@ -115,19 +115,31 @@ const PureDay = ({name, eventSlots, slotsPerHour}) => {
 };
 
 const Day = ({name, events, slotsPerHour}) => {
-  const eventSlotsByMilitaryTime = slotsForRawEvents(events, slotsPerHour);
-  const emptySlot =  { color: 'green', description: 'This slot is open' };
-  const segments = ["00", "15", "30", "45"];
-  const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
-  const eventSlots = times.flatMap( (time, row) => (
-    segments.map( (minutes, column) => {
-      const militaryTime = militaryTimeForIndex(row*slotsPerHour + column);
-      return eventSlotsByMilitaryTime[militaryTime] || emptySlot;
-    })
-  ));
+  const timeSlotFactory = new ConcreteTimeSlotFactory(4, 'green', 'open');
+  const eventSlots = timeSlotFactory.timeSlotsForCalendar({events: ()=>events});
   console.log('eventSlots: ', eventSlots);
   return PureDay({name, eventSlots, slotsPerHour});
 };
+
+class ConcreteTimeSlotFactory {
+  constructor(slotsPerHour, emptyColor, emptyDescription) {
+    console.assert(60 % slotsPerHour === 0, 'slotsPerHour must divide 60 minutes evenly');
+    this.slotsPerHour = slotsPerHour;
+    this.emptySlot = { color: emptyColor, description: emptyDescription };
+  }
+  timeSlotsForCalendar(calendar) {
+    const eventSlotsByMilitaryTime = slotsForRawEvents(calendar.events(), this.slotsPerHour);
+    const segments = ["00", "15", "30", "45"];
+    const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
+    const timeSlots = times.flatMap( (time, row) => (
+        segments.map( (minutes, column) => {
+          const militaryTime = militaryTimeForIndex(row*this.slotsPerHour + column);
+          return eventSlotsByMilitaryTime[militaryTime] || this.emptySlot;
+        })
+    ));
+    return timeSlots
+  }
+}
 
 export default Calendar;
 
