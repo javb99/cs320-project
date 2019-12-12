@@ -79,7 +79,17 @@ const CalendarScreen = ({groups, createGroup }) => {
                     setSelectedMemberIndexes(toggleMember(selectedMemberIndexes, index))
                   }}
               />
-              )}
+            )}
+            <Menu.Item key='_new_invite_'>
+              <Popup
+                on='click'
+                position='left center'
+                content={ '/groups/join/' + groups[selectedGroupIndex]._id }
+                trigger={
+                  <Button>Copy Invite Link</Button>
+                }
+              />
+            </Menu.Item>
           </Menu>
             : 'no groups' }
         </Grid.Column>

@@ -10,6 +10,7 @@ import Public from './Public';
 import { useTracker } from 'meteor/react-meteor-data';
 import SignUpScreen from '../imports/ui/SignUpScreen';
 import ProfileScreen from '../imports/ui/ProfileScreen';
+import JoinGroupScreen from '../imports/ui/JoinGroupScreen';
 
 const browserHistory = createBrowserHistory();
 
@@ -25,6 +26,7 @@ export const RenderRoutes = () => {
           <Public exact path="/signup" component={SignUpScreen} authenticated={authenticated} loggingIn={loggingIn} />
           <Authenticated exact path="/" component={App} authenticated={authenticated} loggingIn={loggingIn} />
           <Authenticated exact path="/profile" component={ProfileScreen} authenticated={authenticated} loggingIn={loggingIn} />
+          <Authenticated path="/groups/join/:_id" component={JoinGroupScreen} authenticated={authenticated} loggingIn={loggingIn} />
         </Switch>
       </Router>
   );
