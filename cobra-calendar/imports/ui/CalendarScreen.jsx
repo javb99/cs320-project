@@ -28,9 +28,12 @@ const CalendarScreen = ({groups, createGroup }) => {
   };
 
   const userID = Meteor.userId();
-  const calendars = Calendars.find({ownerID: userID});
+  const memberIDByGroup = groups[selectedGroupIndex].members().map((member, index) => [member._id, index]).filter( (idAndIndex) => (idAndIndex[1] in selectedMemberIndexes));
+  const memberIDs = _.uniq(_.flatten(memberIDByGroup));
+  console.log('memberIDByGroup', memberIDByGroup, 'memberIDs', memberIDs);
+  const calendars = Calendars.find({ownerID: {$in: memberIDs}});
   const events = _.flatten(_.toArray(calendars.map((cal)=>cal.events().fetch())));
-  const presentableEvents = _.map(events, (event)=>({color:'red', start: event.start, end: event.end, description:'blocked'}));
+  const presentableEvents = _.map(events, (event)=>({color:'white', start: event.start, end: event.end, description:'blocked'}));
   console.log('events from calendars', userID, calendars.fetch(), events, presentableEvents);
   console.log(groups, selectedGroupIndex);
   return (
