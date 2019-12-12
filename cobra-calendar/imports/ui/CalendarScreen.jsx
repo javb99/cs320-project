@@ -3,11 +3,10 @@ import React, { useState } from 'react'
 import * as _ from 'underscore';
 import { Button, Container, Divider, Grid, Header, Menu, Message, Popup, Segment, Table } from 'semantic-ui-react'
 import Calendar from './Calendar.jsx';
-import Calendars from '../api/calendars';
-import { Meteor } from 'meteor/meteor';
 import { dateAddingDays } from './Calendar';
 import AppMenu from './AppMenu';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
+import { GroupCalendar, PresentableCalendar } from '../presentation/PresentationCalendars';
 
 const CalendarScreen = ({groups, createGroup }) => {
 
@@ -95,28 +94,6 @@ const CalendarScreen = ({groups, createGroup }) => {
       </Grid>
       </div>
   )
-}
-
-class GroupCalendar {
-  constructor(memberIDs) {
-    this.memberIDs = memberIDs
-  }
-  getCalendars() {
-    return Calendars.find({ownerID: {$in: this.memberIDs}});
-  }
-  getEvents() {
-    return _.flatten(_.toArray(this.getCalendars().map((cal)=>cal.events().fetch())));
-  }
-}
-
-class PresentableCalendar {
-  constructor(calendar) {
-    this.calendar = calendar;
-  }
-  getEvents() {
-    const parentEvents = this.calendar.getEvents();
-    return _.map(parentEvents, (event)=>({color:'white', description:'blocked', ...event}));
-  }
 }
 
 export default CalendarScreen;

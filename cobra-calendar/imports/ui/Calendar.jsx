@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Grid, Button, Popup } from 'semantic-ui-react'
 import * as _ from 'underscore';
 import ConcreteTimeSlotFactory from '../presentation/ConcreteTimeSlotFactory';
-import Calendars from '../api/calendars';
+import { FilterCalendar } from '../presentation/PresentationCalendars';
 
 const Calendar = ({calendar, weekStart, prev, next, goToToday}) => {
   const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
@@ -25,17 +25,6 @@ const Calendar = ({calendar, weekStart, prev, next, goToToday}) => {
       </Container>
   );
 };
-
-class FilterCalendar {
-  constructor(calendar, predicate) {
-    this.calendar = calendar;
-    this.predicate = predicate;
-  }
-  getEvents() {
-    const parentEvents = this.calendar.getEvents();
-    return _.filter(parentEvents, this.predicate);
-  }
-}
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
