@@ -2,29 +2,40 @@ import React from 'react'
 import { Container, Grid, Button, Popup } from 'semantic-ui-react'
 import * as _ from 'underscore';
 import ConcreteTimeSlotFactory from '../presentation/ConcreteTimeSlotFactory';
+import Calendars from '../api/calendars';
 
-const Calendar = (props) => {
+const Calendar = ({calendar, weekStart, prev, next, goToToday}) => {
   const days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
-  const events = props.events;
   return (
       <Container>
         <h1>
-          <Button icon="angle left" onClick={props.prev}/>
-          <Button icon="angle right" onClick={props.next}/>
-          { titleForWeekStart(props.weekStart) }
-          <Button onClick={props.goToToday}>Today</Button>
+          <Button icon="angle left" onClick={prev}/>
+          <Button icon="angle right" onClick={next}/>
+          { titleForWeekStart(weekStart) }
+          <Button onClick={goToToday}>Today</Button>
         </h1>
         <Grid celled columns={days.length}>
           {days.map( (day, index) => {
-              const date = dateAddingDays(props.weekStart, index);
+              const date = dateAddingDays(weekStart, index);
               return <Grid.Column key={index}>
-                <Day name={day + date.getDate()} events={ _.filter(events, startDateMatches(date)) } slotsPerHour={4} />
+                <Day name={day + date.getDate()} calendar={ new FilterCalendar(calendar, startDateMatches(date)) } slotsPerHour={4} />
               </Grid.Column>;
           })}
         </Grid>
       </Container>
   );
 };
+
+class FilterCalendar {
+  constructor(calendar, predicate) {
+    this.calendar = calendar;
+    this.predicate = predicate;
+  }
+  getEvents() {
+    const parentEvents = this.calendar.getEvents();
+    return _.filter(parentEvents, this.predicate);
+  }
+}
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -69,9 +80,9 @@ const PureDay = ({name, eventSlots, slotsPerHour}) => {
     );
 };
 
-const Day = ({name, events, slotsPerHour}) => {
+const Day = ({name, calendar, slotsPerHour}) => {
   const timeSlotFactory = new ConcreteTimeSlotFactory(slotsPerHour, 'green', 'open', 8, 13);
-  const eventSlots = timeSlotFactory.timeSlotsForCalendar({getEvents: ()=>events});
+  const eventSlots = timeSlotFactory.timeSlotsForCalendar(calendar);
   console.log('eventSlots: ', eventSlots);
   return PureDay({name, eventSlots, slotsPerHour});
 };

@@ -31,8 +31,7 @@ const CalendarScreen = ({groups, createGroup }) => {
   const memberIDs = selectedGroupMembers.map( (member) => member._id );
   const selectedMemberIDs = memberIDs.filter( (id, index) => (selectedMemberIndexes.includes(index)));
   const groupCalendar = new GroupCalendar(selectedMemberIDs);
-  const events = groupCalendar.getEvents();
-  const presentableEvents = _.map(events, (event)=>({color:'white', start: event.start, end: event.end, description:'blocked'}));
+  const presentableCalendar = new PresentableCalendar(groupCalendar);
   return (
     <div>
       <AppMenu />
@@ -63,7 +62,7 @@ const CalendarScreen = ({groups, createGroup }) => {
 
         <Grid.Column stretched width={12}>
           <Segment>
-            <Calendar now={now} weekStart={weekStart} events={presentableEvents} prev={prevWeek} next={nextWeek} goToToday={goToToday}/>
+            <Calendar now={now} weekStart={weekStart} calendar={presentableCalendar} prev={prevWeek} next={nextWeek} goToToday={goToToday}/>
           </Segment>
         </Grid.Column>
 
@@ -107,6 +106,16 @@ class GroupCalendar {
   }
   getEvents() {
     return _.flatten(_.toArray(this.getCalendars().map((cal)=>cal.events().fetch())));
+  }
+}
+
+class PresentableCalendar {
+  constructor(calendar) {
+    this.calendar = calendar;
+  }
+  getEvents() {
+    const parentEvents = this.calendar.getEvents();
+    return _.map(parentEvents, (event)=>({color:'white', description:'blocked', ...event}));
   }
 }
 
