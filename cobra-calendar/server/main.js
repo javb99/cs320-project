@@ -11,22 +11,5 @@ function insertGroup(name, ownerID) {
 }
 
 Meteor.startup(() => {
-  // If the Groups collection is empty, add some data.
-  if (Groups.find({}).count() === 0) {
 
-    insertGroup(
-      'WSU',
-      'aMPrYzdFZ2aC47ELS'
-    );
-
-    insertGroup(
-      'Clark',
-      'aMPrYzdFZ2aC47ELS'
-    );
-
-    insertGroup(
-      'Crossroads',
-      'aMPrYzdFZ2aC47ELS'
-    );
-  }
 });

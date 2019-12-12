@@ -5,7 +5,7 @@ import CalendarScreen from './CalendarScreen';
 import LogInScreen from './LogInScreen';
 
 const App = () => {
-  const groups = useTracker( () => Groups.find({memberIDs: [Meteor.userId()]}).fetch(), [Meteor.userId()] );
+  const groups = useTracker( () => Groups.find({memberIDs: {$in: [Meteor.userId()]}}).fetch(), [Meteor.userId()] );
   const user = useTracker( () => Meteor.user() );
   console.log('App.groups', groups);
   return (
