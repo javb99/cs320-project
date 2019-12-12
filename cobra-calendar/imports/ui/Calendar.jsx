@@ -17,7 +17,7 @@ const Calendar = (props) => {
           {days.map( (day, index) => {
               const date = dateAddingDays(props.weekStart, index);
               return <Grid.Column key={index}>
-                <Day name={day} date={date} events={ _.filter(events, startDateMatches(date)) } slotsPerHour={4} />
+                <Day name={day + date.getDate()} events={ _.filter(events, startDateMatches(date)) } slotsPerHour={4} />
               </Grid.Column>;
           })}
         </Grid>
@@ -94,14 +94,14 @@ export const slotsForRawEvents = (events, slotsPerHour) => {
   return splitEventsToSlots(normalizeEvents(events, slotsPerHour), slotsPerHour);
 };
 
-const Day = ({name, date, events, slotsPerHour}) => {
+const Day = ({name, events, slotsPerHour}) => {
     const eventSlots = slotsForRawEvents(events, slotsPerHour);
     const emptySlot =  { color: 'green', description: 'This slot is open' };
     const segments = ["00", "15", "30", "45"];
     const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
     return (
         <Grid columns={1}>
-          <h1>{name + date.getDate()}</h1>
+          <h1>{name}</h1>
           {times.map( (time, row) => (
               <Grid.Row key={row} className='no-padding'>
                 <Grid columns={4}>
