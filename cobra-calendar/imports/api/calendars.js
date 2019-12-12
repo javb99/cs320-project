@@ -26,6 +26,7 @@ Calendars.helpers({
 
 Meteor.methods({
   async addCalendar(name, url) {
+    if (this.isSimulation) { return; }
     // TODO: validate url
     const events = await parseICalContentsOf(url);
     const newCalID = Calendars.insert({ownerID: Meteor.userId(), name: name, source: url, eventIDs: []});
