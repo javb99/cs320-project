@@ -17,6 +17,6 @@ Meteor.startup(() => {
 
 Accounts.onCreateUser((options, user) => {
   console.log('created user', user);
-  insertGroup(user.username + ' friends', user._id);
+  insertGroup('My Schedule', user._id);
   return user;
 });
