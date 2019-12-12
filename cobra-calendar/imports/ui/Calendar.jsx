@@ -70,7 +70,7 @@ const PureDay = ({name, eventSlots, slotsPerHour}) => {
 };
 
 const Day = ({name, events, slotsPerHour}) => {
-  const timeSlotFactory = new ConcreteTimeSlotFactory(slotsPerHour, 'green', 'open', 0, 24);
+  const timeSlotFactory = new ConcreteTimeSlotFactory(slotsPerHour, 'green', 'open', 8, 13);
   const eventSlots = timeSlotFactory.timeSlotsForCalendar({getEvents: ()=>events});
   console.log('eventSlots: ', eventSlots);
   return PureDay({name, eventSlots, slotsPerHour});
