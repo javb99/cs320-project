@@ -94,14 +94,14 @@ export const slotsForRawEvents = (events, slotsPerHour) => {
   return splitEventsToSlots(normalizeEvents(events, slotsPerHour), slotsPerHour);
 };
 
-const Day = (props) => {
-    const eventSlots = slotsForRawEvents(props.events, props.slotsPerHour);
+const Day = ({name, date, events, slotsPerHour}) => {
+    const eventSlots = slotsForRawEvents(events, slotsPerHour);
     const emptySlot =  { color: 'green', description: 'This slot is open' };
     const segments = ["00", "15", "30", "45"];
     const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
     return (
         <Grid columns={1}>
-          <h1>{props.name + props.date.getDate()}</h1>
+          <h1>{name + date.getDate()}</h1>
           {times.map( (time, row) => (
               <Grid.Row key={row} className='no-padding'>
                 <Grid columns={4}>
