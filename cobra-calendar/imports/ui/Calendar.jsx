@@ -94,29 +94,39 @@ export const slotsForRawEvents = (events, slotsPerHour) => {
   return splitEventsToSlots(normalizeEvents(events, slotsPerHour), slotsPerHour);
 };
 
-const Day = ({name, events, slotsPerHour}) => {
-    const eventSlots = slotsForRawEvents(events, slotsPerHour);
-    const emptySlot =  { color: 'green', description: 'This slot is open' };
-    const segments = ["00", "15", "30", "45"];
-    const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
+const PureDay = ({name, eventSlots, slotsPerHour}) => {
+    const rows = _.chunk(eventSlots, slotsPerHour); // Break into rows. 1 row per hour.
     return (
         <Grid columns={1}>
           <h1>{name}</h1>
-          {times.map( (time, row) => (
+          {rows.map( (rowSlots, row) => (
               <Grid.Row key={row} className='no-padding'>
-                <Grid columns={4}>
-                  {segments.map( (label, column) => {
-                    const time = militaryTimeForIndex(row*segments.length + column);
-                    const event = eventSlots[time] || emptySlot;
-                    return <Grid.Column className='no-padding'>
-                      <Popup content={event.description} trigger={<Button size='mini' color={event.color}/>} />
-                    </Grid.Column>;
-                  })}
+                <Grid columns={slotsPerHour}>
+                  {rowSlots.map( (slot, column) => (
+                    <Grid.Column className='no-padding' key={column}>
+                      <Popup content={slot.description} trigger={<Button size='mini' color={slot.color}/>} />
+                    </Grid.Column>
+                  ))}
                 </Grid>
               </Grid.Row>
           ))}
         </Grid>
     );
+};
+
+const Day = ({name, events, slotsPerHour}) => {
+  const eventSlotsByMilitaryTime = slotsForRawEvents(events, slotsPerHour);
+  const emptySlot =  { color: 'green', description: 'This slot is open' };
+  const segments = ["00", "15", "30", "45"];
+  const times = ["8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8"];
+  const eventSlots = times.flatMap( (time, row) => (
+    segments.map( (minutes, column) => {
+      const militaryTime = militaryTimeForIndex(row*slotsPerHour + column);
+      return eventSlotsByMilitaryTime[militaryTime] || emptySlot;
+    })
+  ));
+  console.log('eventSlots: ', eventSlots);
+  return PureDay({name, eventSlots, slotsPerHour});
 };
 
 export default Calendar;
