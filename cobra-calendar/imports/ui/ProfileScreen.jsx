@@ -13,6 +13,7 @@ import Calendars from '../api/calendars';
 import { useTracker } from 'meteor/react-meteor-data';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
 import AppMenu from './AppMenu';
+import CobraLogo from './CobraLogo';
 
 const ProfileScreen = () => {
   const calendars = useTracker( () => Meteor.user().getCalendars().fetch());

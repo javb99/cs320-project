@@ -3,12 +3,13 @@ import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import AccountsUIWrapper from './AccountsUIWrapper';
+import CobraLogo from './CobraLogo';
 
 const LogInScreen = () => (
   <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
       <Header as='h2' color='teal' textAlign='center'>
-        <Image src='/logo.png' /> Log-in to your account
+        <CobraLogo /> Log-in to your account
       </Header>
       <Form size='large' onSubmit={logIn}>
         <Segment stacked>
