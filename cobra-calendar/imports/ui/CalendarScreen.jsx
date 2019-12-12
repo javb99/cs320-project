@@ -65,38 +65,44 @@ const CalendarScreen = ({groups, createGroup }) => {
           </Segment>
         </Grid.Column>
 
-        <Grid.Column width={2}>
-          { groups.length > 0
-            ? <Menu fluid vertical>
-            {selectedGroupMembers.map( (member, index) =>
-              <Menu.Item
-                  key={index}
-                  name={member.username}
-                  active={selectedMemberIndexes.includes(index)}
-                  onClick={() => {
-                    setSelectedMemberIndexes(toggleMember(selectedMemberIndexes, index))
-                  }}
-              />
-            )}
-            <Menu.Item key='_new_invite_'>
-              <Popup
-                on='click'
-                position='left center'
-                content={ '/groups/join/' + groups[selectedGroupIndex]._id }
-                trigger={
-                  <Button>Copy Invite Link</Button>
-                }
-              />
-            </Menu.Item>
-          </Menu>
-            : 'no groups' }
-        </Grid.Column>
+        <MembersList
+            members={selectedGroupMembers}
+            selectedIndexes={selectedMemberIndexes}
+            toggleIndex={(index) => {
+              setSelectedMemberIndexes(toggleMember(selectedMemberIndexes, index));
+            }}
+        />
       </Grid>
       </div>
   )
-}
+};
 
 export default CalendarScreen;
+
+const MembersList = ({members, selectedIndexes}) => (
+  <Grid.Column width={2}>
+    <Menu fluid vertical>
+      {members.map( (member, index, toggleIndex) =>
+          <Menu.Item
+              key={index}
+              name={member.username}
+              active={selectedIndexes.includes(index)}
+              onClick={() => { toggleIndex(index); }}
+          />
+      )}
+      <Menu.Item key='_new_invite_'>
+        <Popup
+            on='click'
+            position='left center'
+            content={ '/groups/join/' + groups[selectedGroupIndex]._id }
+            trigger={
+              <Button>Copy Invite Link</Button>
+            }
+        />
+      </Menu.Item>
+    </Menu>
+  </Grid.Column>
+);
 
 function isNot(testValue) {
   return (v) => {
