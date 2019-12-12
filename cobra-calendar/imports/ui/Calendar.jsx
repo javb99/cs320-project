@@ -134,11 +134,13 @@ class ConcreteTimeSlotFactory {
     const eventSlotsByMilitaryTime = slotsForRawEvents(calendar.getEvents(), this.slotsPerHour);
     const timeSlots = _.range(this.hourCount).flatMap( (row) => (
         _.range(this.slotsPerHour).map( (col) => {
-          const militaryTime = col * this.slotLength + (100 * (row + this.firstHour));
-          return eventSlotsByMilitaryTime[militaryTime] || this.emptySlot;
+          return eventSlotsByMilitaryTime[this.militaryTimeFor(row, col)] || this.emptySlot;
         })
     ));
     return timeSlots
+  }
+  militaryTimeFor(row, column) {
+    return column * this.slotLength + (100 * (row + this.firstHour));
   }
 }
 
