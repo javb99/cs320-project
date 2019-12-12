@@ -27,15 +27,12 @@ const CalendarScreen = ({groups, createGroup }) => {
     setWeekStart(weekStartForDate(now));
   };
 
-  const userID = Meteor.userId();
-  const memberIDs = _.uniq(_.flatten(groups[selectedGroupIndex].memberIDs));
+  const selectedGroupMembers = groups[selectedGroupIndex].members();
+  const memberIDs = selectedGroupMembers.map( (member) => member._id );
   const selectedMemberIDs = memberIDs.filter( (id, index) => (selectedMemberIndexes.includes(index)));
-  console.log('memberIDByGroup', selectedMemberIDs, 'memberIDs', memberIDs);
-  const calendars = Calendars.find({ownerID: {$in: selectedMemberIDs}});
-  const events = _.flatten(_.toArray(calendars.map((cal)=>cal.events().fetch())));
+  const groupCalendar = new GroupCalendar(selectedMemberIDs);
+  const events = groupCalendar.getEvents();
   const presentableEvents = _.map(events, (event)=>({color:'white', start: event.start, end: event.end, description:'blocked'}));
-  console.log('events from calendars', userID, calendars.fetch(), events, presentableEvents);
-  console.log(groups, selectedGroupIndex);
   return (
     <div>
       <AppMenu />
@@ -73,7 +70,7 @@ const CalendarScreen = ({groups, createGroup }) => {
         <Grid.Column width={2}>
           { groups.length > 0
             ? <Menu fluid vertical>
-            {groups[selectedGroupIndex].members().fetch().map( (member, index) =>
+            {selectedGroupMembers.map( (member, index) =>
               <Menu.Item
                   key={index}
                   name={member.username}
@@ -99,6 +96,18 @@ const CalendarScreen = ({groups, createGroup }) => {
       </Grid>
       </div>
   )
+}
+
+class GroupCalendar {
+  constructor(memberIDs) {
+    this.memberIDs = memberIDs
+  }
+  getCalendars() {
+    return Calendars.find({ownerID: {$in: this.memberIDs}});
+  }
+  getEvents() {
+    return _.flatten(_.toArray(this.getCalendars().map((cal)=>cal.events().fetch())));
+  }
 }
 
 export default CalendarScreen;
