@@ -67,6 +67,7 @@ const CalendarScreen = ({groups, createGroup }) => {
 
         <MembersList
             members={selectedGroupMembers}
+            inviteLink={'/groups/join/' + groups[selectedGroupIndex]._id}
             selectedIndexes={selectedMemberIndexes}
             toggleIndex={(index) => {
               setSelectedMemberIndexes(toggleMember(selectedMemberIndexes, index));
@@ -79,7 +80,7 @@ const CalendarScreen = ({groups, createGroup }) => {
 
 export default CalendarScreen;
 
-const MembersList = ({members, selectedIndexes}) => (
+const MembersList = ({members, selectedIndexes, inviteLink}) => (
   <Grid.Column width={2}>
     <Menu fluid vertical>
       {members.map( (member, index, toggleIndex) =>
@@ -94,7 +95,7 @@ const MembersList = ({members, selectedIndexes}) => (
         <Popup
             on='click'
             position='left center'
-            content={ '/groups/join/' + groups[selectedGroupIndex]._id }
+            content={ inviteLink }
             trigger={
               <Button>Copy Invite Link</Button>
             }
