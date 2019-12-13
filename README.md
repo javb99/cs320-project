@@ -14,7 +14,7 @@ By highlighting only available time, it will be easy to find
 appropriate time blocks, even with large groups of busy individuals.
 
 ## Status
-Design
+Implementation
 
 ## Contributors
 Joseph Van Boxtel - joseph.vanboxtel@wsu.edu - @javb99
